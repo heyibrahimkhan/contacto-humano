@@ -41,7 +41,7 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
             final ImageView imageView = imageViewReference.get();
             if (imageView != null) {
                 imageView.setImageBitmap(bitmap);
-                dc.onDownComp(true);
+                if(dc != null) dc.onDownComp(bitmap);
             }
         }
     }
@@ -58,7 +58,7 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
     }
 
     public interface downloadCompleteCallBack{
-        public void onDownComp(boolean done);
+        public void onDownComp(Bitmap bitmap);
     }
 
 }

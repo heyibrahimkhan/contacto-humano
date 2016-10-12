@@ -1,5 +1,6 @@
 package contacto.humano.com.m_adapters.home;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import contacto.humano.com.Frag_getHome;
+import contacto.humano.com.m_fragments.Frag_getHome;
 import contacto.humano.com.R;
 import contacto.humano.com.utils.BitmapWorkerTask;
 
@@ -20,6 +21,7 @@ import contacto.humano.com.utils.BitmapWorkerTask;
 public class rv_hp_adapter extends RecyclerView.Adapter<rv_hp_adapter.homepostHolder> {
 
     static int imagesDownlaoded = 0;
+    private int timeInt;
 
     public rv_hp_adapter(ArrayList<class_home_post> list) {
         list_post = list;
@@ -67,10 +69,11 @@ public class rv_hp_adapter extends RecyclerView.Adapter<rv_hp_adapter.homepostHo
         holder.hp_time.setText(list_post.get(position).date);
         new BitmapWorkerTask(holder.hp_image, list_post.get(position).url, new BitmapWorkerTask.downloadCompleteCallBack() {
             @Override
-            public void onDownComp(boolean done) {
-                if(done) imagesDownlaoded++;
-                if(imagesDownlaoded > 1){
-
+            public void onDownComp(Bitmap bitmap) {
+                Frag_getHome.fadeBitmap.add(bitmap);
+                if(timeInt < 1) {
+                    Frag_getHome.startFadeAnim();
+                    timeInt++;
                 }
             }
         }).execute();

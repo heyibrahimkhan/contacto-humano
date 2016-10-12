@@ -1,4 +1,4 @@
-package contacto.humano.com.getWebMat;
+package contacto.humano.com.get_data_async;
 
 
 import org.jsoup.Jsoup;
@@ -8,12 +8,11 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-import contacto.humano.com.Frag_getHome;
 import contacto.humano.com.MainActivity;
-import contacto.humano.com.mInterfaces.home.i_home_achieve;
-import contacto.humano.com.mInterfaces.home.i_home_decor;
-import contacto.humano.com.mInterfaces.home.i_home_news_post;
-import contacto.humano.com.mInterfaces.home.i_home_test;
+import contacto.humano.com.m_interfaces.home.i_home_achieve;
+import contacto.humano.com.m_interfaces.home.i_home_decor;
+import contacto.humano.com.m_interfaces.home.i_home_news_post;
+import contacto.humano.com.m_interfaces.home.i_home_test;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
 import contacto.humano.com.m_adapters.home.rv_hp_adapter;
 
@@ -23,29 +22,11 @@ import contacto.humano.com.m_adapters.home.rv_hp_adapter;
 
 public class getHome extends myGet {
 
-    public i_home_decor homeDecor;
-    public i_home_achieve homeAchieve;
-    private i_home_test hometest;
     private ArrayList<Object> mInterfaces;
 
     public getHome(ArrayList interfaces){
         url = "http://con-tactohumano.com/"; // Put page url
         mInterfaces = interfaces;
-    }
-
-    public getHome(i_home_decor HomeDecor, i_home_test HomeTest){
-        homeDecor = HomeDecor;
-        hometest = HomeTest;
-        url = "http://con-tactohumano.com/"; // Put page url
-    }
-
-    public getHome(String URL){
-        url = URL;
-        url = "http://con-tactohumano.com/"; // Put page url
-    }
-
-    public getHome(){
-        url = "http://con-tactohumano.com/"; // Put page url
     }
 
     @Override
@@ -62,9 +43,9 @@ public class getHome extends myGet {
 //            String b_vc_custom_heading = document.select("div.vc_cta3-actions").text();
 
             //Decor Items
-            Elements decor_title = document.select("h6.no_stripe");
+            Elements decor_title = document.select("div.title h6 span");
             Elements decor_detail = document.select("div.info_box_text p");
-            ((i_home_decor)mInterfaces.get(0)).onDecorItemsLoaded(getHomeDecorItems(decor_title, decor_detail));
+            ((i_home_decor) mInterfaces.get(0)).onDecorItemsLoaded(getHomeDecorItems(decor_title, decor_detail));
 
             //Achievements Items
             if(mInterfaces.size() > 1) {
@@ -94,24 +75,9 @@ public class getHome extends myGet {
                 }
                 ((i_home_news_post) mInterfaces.get(3)).onHomeNewsPostLoaded(getNewsPostMat(news_post_url, news_post_goto, news_post_date));
             }
-
-//            if(ems == null){
-//                System.out.println("Null");
-//            }
-//            else{
-//                System.out.println(ems.toString());
-//                System.out.println("Not null");
-//            }
-//            for(Element e : ems){
-//                String text = e.text();
-//                System.out.println("e = "+text);
-//            }
-
-//            System.out.println(vc_custom_heading);
-//            System.out.println(b_vc_custom_heading);
         }
         catch (Exception ignored){
-            MainActivity.setErrorFrag("home");
+            MainActivity.setErrorFrag("home", url);
         }
         return super.doInBackground(objects);
     }
@@ -180,9 +146,11 @@ public class getHome extends myGet {
         ArrayList l = new ArrayList();
         if(decor_title.size() == decor_detail.size()){
             for (Element e : decor_title){
+//                System.out.println("title = "+e.text());
                 l.add(e.text());
             }
             for (Element e : decor_detail){
+//                System.out.println("message = "+e.text());
                 l.add(e.text());
             }
         }

@@ -1,4 +1,4 @@
-package contacto.humano.com.mInterfaces;
+package contacto.humano.com.m_interfaces;
 
 /**
  * Created by Ibrahim Ali Khan on 10/9/2016.

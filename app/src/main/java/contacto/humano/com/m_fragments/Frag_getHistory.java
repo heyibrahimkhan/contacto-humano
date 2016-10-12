@@ -1,4 +1,4 @@
-package contacto.humano.com.getWebMat;
+package contacto.humano.com.m_fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,19 +10,20 @@ import android.view.ViewGroup;
 
 import contacto.humano.com.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Frag_Error.OnFragmentInteractionListener} interface
+ * {@link Frag_getHistory.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Frag_Error#newInstance} factory method to
+ * Use the {@link Frag_getHistory#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag_Error extends Fragment {
+public class Frag_getHistory extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static String page = "param1";
-    private static String url = "param2";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -30,7 +31,7 @@ public class Frag_Error extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Frag_Error() {
+    public Frag_getHistory() {
         // Required empty public constructor
     }
 
@@ -38,16 +39,16 @@ public class Frag_Error extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-     * @return A new instance of fragment Frag_Error.
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Frag_getHistory.
      */
     // TODO: Rename and change types and number of parameters
-    public static Frag_Error newInstance(String Page, String Url) {
-        Frag_Error fragment = new Frag_Error();
+    public static Frag_getHistory newInstance(String param1, String param2) {
+        Frag_getHistory fragment = new Frag_getHistory();
         Bundle args = new Bundle();
-        args.putString(page, Page);
-        args.putString(url, Url);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,9 +57,8 @@ public class Frag_Error extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            page = getArguments().getString(page);
-            url = getArguments().getString(url);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -66,8 +66,7 @@ public class Frag_Error extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.frag_error, container, false);
-        return  v;
+        return inflater.inflate(R.layout.frag_history, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

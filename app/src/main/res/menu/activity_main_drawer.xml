@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+    <group android:id="@+id/menu_group1" android:checkableBehavior="single">
+        <item android:id="@+id/menu_home" android:title="Home" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <group android:id="@+id/menu_group2" android:checkableBehavior="single">
+        <item android:title="Services">
+            <menu>
+                <item android:id="@+id/menu_academics" android:title="Academics"/>
+                <item android:id="@+id/menu_professionals" android:title="Professionals"/>
+            </menu>
+        </item>
+    </group>
+
+    <group android:id="@+id/menu_group3" android:checkableBehavior="single">
+        <item android:title="About">
+            <menu>
+                <item android:id="@+id/menu_about_us" android:title="About Us" />
+                <item android:id="@+id/menu_history" android:title="History" />
+                <item android:id="@+id/menu_mission" android:title="Mission &amp; Values"/>
+                <item android:id="@+id/menu_team" android:title="Team"/>
+            </menu>
+        </item>
+    </group>
+
+    <group android:id="@+id/menu_group4" android:checkableBehavior="single">
+        <item android:id="@+id/menu_plans" android:title="Plans" />
+        <item android:id="@+id/menu_consulting" android:title="Consulting" />
+        <item android:id="@+id/menu_press" android:title="Press"/>
+        <item android:id="@+id/menu_blog" android:title="Blog"/>
+        <item android:id="@+id/menu_testimonial" android:title="Testimonials"/>
+        <item android:id="@+id/menu_contact" android:title="Contact"/>
+        <item android:id="@+id/menu_register" android:title="Register"/>
+    </group>
 
 </menu>

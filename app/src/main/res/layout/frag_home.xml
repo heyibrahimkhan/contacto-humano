@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="contacto.humano.com.Frag_getHome">
+    tools:context="contacto.humano.com.m_fragments.Frag_getHome">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -17,8 +17,8 @@
             android:layout_height="200dp">
 
             <ImageView
-                android:background="@color/colorAccent"
-                android:src="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/def_post_decor"
                 android:id="@+id/home_ad_post"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />

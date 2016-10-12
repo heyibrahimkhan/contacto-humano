@@ -3,36 +3,37 @@ package contacto.humano.com;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import contacto.humano.com.getWebMat.Frag_Error;
-import contacto.humano.com.mInterfaces.PNConnection;
+import contacto.humano.com.m_fragments.Frag_Error;
+import contacto.humano.com.m_fragments.Frag_getAbout;
+import contacto.humano.com.m_fragments.Frag_getAcademics;
+import contacto.humano.com.m_fragments.Frag_getHistory;
+import contacto.humano.com.m_fragments.Frag_getHome;
+import contacto.humano.com.m_fragments.Frag_getMission;
+import contacto.humano.com.m_fragments.Frag_getTeam;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Frag_getHome.OnFragmentInteractionListener,
-        Frag_Error.OnFragmentInteractionListener {
+        Frag_Error.OnFragmentInteractionListener, Frag_getAbout.OnFragmentInteractionListener {
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -41,6 +42,19 @@ public class MainActivity extends AppCompatActivity
     private static FragmentManager fm;
     static String currentPage;
     static String currentUrl;
+    public static String urlAppend;
+    String[] language;
+    private static String[] listItem = {"home", "about us", "history", "mission", "team", "academics", "professionals",
+            "plans", "consulting", "press", "blog", "testimonials", "contact", "register"};
+    private static Fragment frag[] = {new Frag_getHome(), new Frag_getAbout(), new Frag_getHistory(), new Frag_getMission(),
+            new Frag_getTeam(), new Frag_getAcademics()};
+    private static String[] listURL = {"http://con-tactohumano.com/", "http://con-tactohumano.com/about-us/",
+            "http://con-tactohumano.com/historia/", "http://con-tactohumano.com/mission-and-values/",
+            "http://con-tactohumano.com/team/", "http://con-tactohumano.com/academics/", "http://con-tactohumano.com/professional/",
+            "http://con-tactohumano.com/plans/", "http://con-tactohumano.com/consulting/",
+            "http://con-tactohumano.com/press/", "http://con-tactohumano.com/blog-2/",
+            "http://con-tactohumano.com/testimonials-page/", "http://con-tactohumano.com/contact-us/",
+            "http://con-tactohumano.com/profile/register/"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +93,26 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        urlAppend = "";
+
+//        language = getResources().getStringArray(R.array.languages);
+
+
+//        Spinner spinner = (Spinner) navigationView.getMenu().getItem(5);
+//        if(spinner != null) {
+//            spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, language));
+//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                    Toast.makeText(MainActivity.this, language[position], Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> parent) {
+//                }
+//            });
+//        }
     }
 
     @Override
@@ -118,22 +152,102 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.menu_home) {
+            currentPage = "home";
+            currentUrl = "http://con-tactohumano.com/";
         }
+        else if (id == R.id.menu_about_us) {
+            currentPage = "about us";
+            currentUrl = "http://con-tactohumano.com/about-us/";
+        }
+        else if (id == R.id.menu_history) {
+            currentPage = "history";
+            currentUrl = "http://con-tactohumano.com/historia/";
+        }
+        else if(id == R.id.menu_mission){
+            currentPage = "mission";
+            currentUrl = "http://con-tactohumano.com/mission-and-values/";
+        }
+        else if (id == R.id.menu_team) {
+            currentPage = "team";
+            currentUrl = "http://con-tactohumano.com/team/";
+        }
+        else if (id == R.id.menu_academics) {
+            currentPage = "academics";
+            currentUrl = "http://con-tactohumano.com/academics/";
+        }
+        else if (id == R.id.menu_professionals) {
+            currentPage = "professionals";
+            currentUrl = "http://con-tactohumano.com/professional/";
+        }
+        else if (id == R.id.menu_plans) {
+            currentPage = "plans";
+            currentUrl = "http://con-tactohumano.com/plans/";
+        }
+        else if (id == R.id.menu_consulting) {
+            currentPage = "consulting";
+            currentUrl = "http://con-tactohumano.com/consulting/";
+        }
+        else if (id == R.id.menu_press) {
+            currentPage = "press";
+            currentUrl = "http://con-tactohumano.com/press/";
+        }
+        else if (id == R.id.menu_blog) {
+            currentPage = "blog";
+            currentUrl = "http://con-tactohumano.com/blog-2/";
+        }
+        else if (id == R.id.menu_testimonial) {
+            currentPage = "testimonials";
+            currentUrl = "http://con-tactohumano.com/testimonials-page/";
+        }
+        else if (id == R.id.menu_contact) {
+            currentPage = "contact";
+            currentUrl = "http://con-tactohumano.com/contact-us/";
+        }
+        else if (id == R.id.menu_register) {
+            currentPage = "register";
+            currentUrl = "http://con-tactohumano.com/profile/register/";
+        }
+
+        replaceFragment(currentPage);
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public static void replaceFragment() {
+        String url = "";
+        int len = listItem.length;
+        Fragment f = null;
+        for(int i = 0; i < len; i++){
+            if(listItem[i].equalsIgnoreCase(currentPage)){
+                url = listURL[i];
+                currentUrl = url;
+                f = frag[i];
+                break;
+            }
+        }
+        url = url.concat(urlAppend);
+        fm.beginTransaction().replace(R.id.mFrame, f).commit();
+    }
+
+    public static void replaceFragment(String currPage) {
+        String url = "";
+        int len = listItem.length;
+        Fragment f = null;
+        for(int i = 0; i < len; i++){
+            if(listItem[i].equalsIgnoreCase(currPage)){
+                url = listItem[i];
+                f = frag[i];
+                break;
+            }
+        }
+        url = url.concat(urlAppend);
+        fm.beginTransaction().replace(R.id.mFrame, f).commit();
+    }
+
+    public static void replaceFragment(Fragment fragment){
+        fm.beginTransaction().replace(R.id.mFrame, fragment).commit();
     }
 
     @Override
@@ -141,33 +255,28 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public static void setErrorFrag(String page){
+    public static void setErrorFrag(String page, String url){
+        currentPage = page;
+        currentUrl = url;
         Frag_Error fe;
-        fm.beginTransaction().replace(R.id.mFrame, fe = new Frag_Error()).commit();
+        fm.beginTransaction().replace(R.id.mFrame, new Frag_Error()).commit();
     }
 
-    public static void reloadFragment(){
-        Fragment f;
-        currentUrl = ((rv_hb_adapter)(rv_homeBar.getAdapter())).getUrl(currentPage);
-        f = getFragment(currentUrl);
-        fm.beginTransaction().replace(R.id.mFrame, f).commit();
-    }
-
-    private static Fragment getFragment(String Url) {
-        if(Url.equals("http://con-tactohumano.com/")){
-            currentPage = "home";
-            return new Frag_getHome();
-        }
-        else if(Url.equals("")){
-
-        }
-        return new Frag_Error();
+    public static void reloadFragement() {
+        replaceFragment();
     }
 
     public static class rv_hb_adapter extends RecyclerView.Adapter<rv_hb_adapter.homeBarTv>{
 
-        private String[] listItem = {"home", "about us", "services", "plans", "consulting", "press", "blog", "testimonials", "contact"};
-        private String[] listURL = {"http://con-tactohumano.com/"};
+        private String[] listItem = {"home", "about us", "services",
+                "plans", "consulting", "press", "blog", "testimonials", "contact", "register"};
+        private String[] listURL = {"http://con-tactohumano.com/", "http://con-tactohumano.com/about-us/",
+                "http://con-tactohumano.com/historia/", "http://con-tactohumano.com/mission-and-values/",
+                "http://con-tactohumano.com/team/", "http://con-tactohumano.com/academics/", "http://con-tactohumano.com/professional/",
+                "http://con-tactohumano.com/plans/", "http://con-tactohumano.com/consulting/",
+                "http://con-tactohumano.com/press/", "http://con-tactohumano.com/blog-2/",
+                "http://con-tactohumano.com/testimonials-page/", "http://con-tactohumano.com/contact-us/",
+                "http://con-tactohumano.com/profile/register/"};
 
         public class homeBarTv extends RecyclerView.ViewHolder{
 
@@ -187,30 +296,18 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(homeBarTv holder, int position) {
-            String text = listItem[position];
+            String text = this.listItem[position];
             holder.tv.setText(text);
         }
 
         @Override
         public int getItemCount() {
-            return listItem.length;
+            return this.listItem.length;
         }
 
         @Override
         public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
-        }
-
-        public String getUrl(String page){
-            String url = "";
-            int len = listItem.length;
-            for (int i = 0; i < len; i++){
-                if(listItem[i].equalsIgnoreCase(page)){
-                    url = listURL[i];
-                    break;
-                }
-            }
-            return url;
         }
     }
 }

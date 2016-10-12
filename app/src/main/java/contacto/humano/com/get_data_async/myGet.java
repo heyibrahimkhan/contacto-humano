@@ -1,4 +1,4 @@
-package contacto.humano.com.getWebMat;
+package contacto.humano.com.get_data_async;
 
 import android.os.AsyncTask;
 
@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 
 public class myGet extends AsyncTask {
 
-    public String url;
+    public static String url;
 
     @Override
     protected void onPreExecute() {

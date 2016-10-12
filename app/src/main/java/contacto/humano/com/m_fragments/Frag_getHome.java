@@ -1,6 +1,7 @@
-package contacto.humano.com;
+package contacto.humano.com.m_fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,11 +29,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import contacto.humano.com.getWebMat.getHome;
-import contacto.humano.com.mInterfaces.home.i_home_achieve;
-import contacto.humano.com.mInterfaces.home.i_home_decor;
-import contacto.humano.com.mInterfaces.home.i_home_news_post;
-import contacto.humano.com.mInterfaces.home.i_home_test;
+import contacto.humano.com.R;
+import contacto.humano.com.get_data_async.getHome;
+import contacto.humano.com.m_interfaces.home.i_home_achieve;
+import contacto.humano.com.m_interfaces.home.i_home_decor;
+import contacto.humano.com.m_interfaces.home.i_home_news_post;
+import contacto.humano.com.m_interfaces.home.i_home_test;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
 import contacto.humano.com.m_adapters.home.rv_hp_adapter;
 
@@ -50,9 +52,8 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static boolean onResumeDone = false;
 
-    // TODO: Rename and change types of parameters
+    // TODO: Rename and change ypes of parameters
     private String mParam1;
     private String mParam2;
 
@@ -77,6 +78,9 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     private RecyclerView rv_home_news_post;
     private static ImageView fadeIv;
     private static Animation fadeAnim;
+    public static ArrayList<Bitmap> fadeBitmap;
+    private static int bitmap_num = 0;
+    private static double lat = 37.803343, lon = -122.472639;
 
     public Frag_getHome() {
         // Required empty public constructor
@@ -157,9 +161,6 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     @Override
     public void onResume() {
         super.onResume();
-        if (mMap == null) {
-            fragment.getMapAsync(this);
-        }
         interfaces_home.add(new i_home_decor() {
             @Override
             public void onDecorItemsLoaded(ArrayList items) {
@@ -216,6 +217,9 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
                 });
             }
         });
+        if (mMap == null) {
+            fragment.getMapAsync(this);
+        }
         new getHome(interfaces_home).execute();
 //        onResumeDone = true;
     }
@@ -229,8 +233,8 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     public void onMapReady(GoogleMap googleMap) {
         if(googleMap != null) {
             mMap = googleMap;
-            mMap.addMarker(new MarkerOptions().position(new LatLng(37.803343, -122.472639)).title("Ahahahah"));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.803343, -122.472639), 14.0f));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title("Storey Ave"));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 16.0f));
         }
     }
 
@@ -358,32 +362,38 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         rv_home_news_post.setItemAnimator(new DefaultItemAnimator());
 
         fadeIv = (ImageView) mView.findViewById(R.id.home_ad_post);
-        fadeAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.bot_top);
+        fadeAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in_out_repeat);
+        fadeBitmap = new ArrayList<>();
     }
 
     public static void startFadeAnim(){
-        fadeIv.post(new Runnable() {
+        bitmap_num = 0;
+        fadeAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void run() {
+            public void onAnimationStart(Animation animation) {
+//                System.out.println("Start Fade Anim");
+//                bitmap_num = (bitmap_num++) % fadeBitmap.size();
+//                fadeIv.setImageBitmap(fadeBitmap.get(bitmap_num));
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                System.out.println("End Fade Anim");
+                bitmap_num = (++bitmap_num) % fadeBitmap.size();
+                fadeIv.setImageBitmap(fadeBitmap.get(bitmap_num));
+                fadeIv.clearAnimation();
                 fadeIv.startAnimation(fadeAnim);
-                fadeAnim.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
+            }
 
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
+            @Override
+            public void onAnimationRepeat(Animation animation) {
 //                        fadeIv.setImageBitmap();
-                    }
-                });
+                System.out.println("Repeat Fade Anim");
+                fadeAnim.setRepeatCount(fadeAnim.getRepeatCount() + 1);
+                bitmap_num = (bitmap_num++) % fadeBitmap.size();
+                fadeIv.setImageBitmap(fadeBitmap.get(bitmap_num));
             }
         });
+        fadeIv.startAnimation(fadeAnim);
     }
 }
