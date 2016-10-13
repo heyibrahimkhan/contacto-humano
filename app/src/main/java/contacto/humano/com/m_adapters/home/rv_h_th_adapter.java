@@ -35,12 +35,19 @@ public class rv_h_th_adapter extends  RecyclerView.Adapter<rv_h_th_adapter.test_
         }
     }
 
-    ArrayList<class_test> list_test;
+    ArrayList<class_testimonial> list_test;
 
-    public static class class_test{
-        public String title, text, name;
+    public static class class_testimonial {
+        public String title, text, name, imageUrl;
 
-        public class_test(String Name, String Title, String Text){
+        public class_testimonial(String Url, String Name, String Title, String Text){
+            imageUrl = Url;
+            name = Name;
+            title = Title;
+            text = Text;
+        }
+
+        public class_testimonial(String Name, String Title, String Text){
             name = Name;
             title = Title;
             text = Text;

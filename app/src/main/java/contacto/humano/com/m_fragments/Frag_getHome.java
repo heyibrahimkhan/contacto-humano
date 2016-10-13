@@ -186,7 +186,9 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
                         tv_achievement.get(j).post(new Runnable() {
                             @Override
                             public void run() {
-                                tv_achievement.get(j).setText(l.get(j).toString());
+                                if(l.size() < j) {
+                                    tv_achievement.get(j).setText(l.get(j));
+                                }
                             }
                         });
                     }

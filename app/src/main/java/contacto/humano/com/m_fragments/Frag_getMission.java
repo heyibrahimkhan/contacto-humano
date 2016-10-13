@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import contacto.humano.com.R;
+import contacto.humano.com.get_data_async.getMission;
+import contacto.humano.com.m_interfaces.about_us.i_about_us;
 
 
 /**
@@ -30,6 +35,9 @@ public class Frag_getMission extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private View mView;
+    private ArrayList<Object> mInterface;
+    private TextView tv;
 
     public Frag_getMission() {
         // Required empty public constructor
@@ -66,7 +74,31 @@ public class Frag_getMission extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_mission, container, false);
+        mView = inflater.inflate(R.layout.frag_mission, container, false);
+        initVars();
+        return mView;
+    }
+
+    private void initVars() {
+        mInterface = new ArrayList<>();
+        tv = (TextView) mView.findViewById(R.id.f_mission_tv);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mInterface.add(new i_about_us() {
+            @Override
+            public void onAboutUsLoaded(final ArrayList<String> list) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(list.size() == 1) tv.setText(list.get(0));
+                    }
+                });
+            }
+        });
+        new getMission(mInterface).execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -82,8 +114,8 @@ public class Frag_getMission extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 

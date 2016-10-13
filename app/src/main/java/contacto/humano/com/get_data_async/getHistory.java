@@ -11,16 +11,16 @@ import contacto.humano.com.MainActivity;
 import contacto.humano.com.m_interfaces.about_us.i_about_us;
 
 /**
- * Created by Ibrahim Ali Khan on 10/11/2016.
+ * Created by Ibrahim Ali Khan on 10/12/2016.
  */
 
-public class getAboutUs extends myGet {
+public class getHistory extends myGet{
 
     ArrayList<Object> mInterfaces;
 
-    public getAboutUs(ArrayList<Object> Interfaces){
+    public getHistory(ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/about-us/"+ MainActivity.lang;
+        url = "http://con-tactohumano.com/historia/" + MainActivity.lang;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class getAboutUs extends myGet {
             Document document = Jsoup.connect(url).get();
             ArrayList<String> list = new ArrayList<>();
             list.add(getImageUrl(document.select("img.alignright")));
-            list = getParas(document.select("div.entry-content div p"), list);
+            list = getParas(document.select("div.wpb_wrapper p"), list);
             if (len_mInterfaces > 0){
                 ((i_about_us) mInterfaces.get(0)).onAboutUsLoaded(list);
             }

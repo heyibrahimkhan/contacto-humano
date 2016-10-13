@@ -25,7 +25,7 @@ public class getHome extends myGet {
     private ArrayList<Object> mInterfaces;
 
     public getHome(ArrayList interfaces){
-        url = "http://con-tactohumano.com/"; // Put page url
+        url = "http://con-tactohumano.com/"+MainActivity.lang; // Put page url
         mInterfaces = interfaces;
     }
 
@@ -121,11 +121,11 @@ public class getHome extends myGet {
         for(Element e : test_text){
             list.add(e.text());
         }
-        ArrayList<rv_h_th_adapter.class_test> l = new ArrayList<>();
+        ArrayList<rv_h_th_adapter.class_testimonial> l = new ArrayList<>();
         int len = list.size();
         for(int i = 0; i < len; i++){
             if(i+(len_ta*2) < len) {
-                rv_h_th_adapter.class_test obj = new rv_h_th_adapter.class_test(list.get(i).toString(),
+                rv_h_th_adapter.class_testimonial obj = new rv_h_th_adapter.class_testimonial(list.get(i).toString(),
                         list.get(i + len_ta).toString(), list.get(i + (len_ta*2)).toString());
                 l.add(obj);
             }
@@ -146,11 +146,11 @@ public class getHome extends myGet {
         ArrayList l = new ArrayList();
         if(decor_title.size() == decor_detail.size()){
             for (Element e : decor_title){
-//                System.out.println("title = "+e.text());
+                System.out.println("title = "+e.text());
                 l.add(e.text());
             }
             for (Element e : decor_detail){
-//                System.out.println("message = "+e.text());
+                System.out.println("message = "+e.text());
                 l.add(e.text());
             }
         }

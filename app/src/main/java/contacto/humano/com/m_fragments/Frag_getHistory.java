@@ -7,8 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import contacto.humano.com.R;
+import contacto.humano.com.get_data_async.getHistory;
+import contacto.humano.com.m_interfaces.about_us.i_about_us;
+import contacto.humano.com.utils.BitmapWorkerTask;
 
 
 /**
@@ -30,6 +37,10 @@ public class Frag_getHistory extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private View mView;
+    private ArrayList<Object> mInterface;
+    private ArrayList<TextView> tvs;
+    private ImageView iv;
 
     public Frag_getHistory() {
         // Required empty public constructor
@@ -66,7 +77,42 @@ public class Frag_getHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_history, container, false);
+        mView =  inflater.inflate(R.layout.frag_about_us, container, false);
+        initVars();
+        return mView;
+    }
+
+    private void initVars() {
+        mInterface = new ArrayList<Object>();
+        iv = (ImageView) mView.findViewById(R.id.f_about_iv);
+        tvs = new ArrayList<TextView>();
+        tvs.add((TextView) mView.findViewById(R.id.f_about_tv1));
+        tvs.add((TextView) mView.findViewById(R.id.f_about_tv2));
+        tvs.add((TextView) mView.findViewById(R.id.f_about_tv3));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mInterface.add(new i_about_us() {
+            @Override
+            public void onAboutUsLoaded(final ArrayList<String> list) {
+                int len = list.size();
+                if(len == 4){
+                    new BitmapWorkerTask(iv, list.get(0), null).execute();
+                    for(int i = 1; i < len; i++){
+                        final int j = i;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvs.get(j-1).setText(list.get(j));
+                            }
+                        });
+                    }
+                }
+            }
+        });
+        new getHistory(mInterface).execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -82,8 +128,8 @@ public class Frag_getHistory extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 

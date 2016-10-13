@@ -23,13 +23,21 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import contacto.humano.com.m_fragments.Frag_Error;
+import contacto.humano.com.m_fragments.Frag_getContact;
+import contacto.humano.com.m_fragments.Frag_getRV;
+import contacto.humano.com.m_fragments.Frag_getTestimonial;
 import contacto.humano.com.m_fragments.Frag_getAbout;
-import contacto.humano.com.m_fragments.Frag_getAcademics;
 import contacto.humano.com.m_fragments.Frag_getHistory;
 import contacto.humano.com.m_fragments.Frag_getHome;
 import contacto.humano.com.m_fragments.Frag_getMission;
 import contacto.humano.com.m_fragments.Frag_getTeam;
+import contacto.humano.com.m_fragments.Frag_getWebView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Frag_getHome.OnFragmentInteractionListener,
@@ -37,17 +45,18 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    FrameLayout mFrame;
-    static RecyclerView rv_homeBar;
+    private FrameLayout mFrame;
+    private RecyclerView rv_homeBar;
     private static FragmentManager fm;
-    static String currentPage;
-    static String currentUrl;
+    public static String currentType;
+    public static String currentUrl;
     public static String urlAppend;
+    public static String lang = "?la=en";
     String[] language;
     private static String[] listItem = {"home", "about us", "history", "mission", "team", "academics", "professionals",
             "plans", "consulting", "press", "blog", "testimonials", "contact", "register"};
     private static Fragment frag[] = {new Frag_getHome(), new Frag_getAbout(), new Frag_getHistory(), new Frag_getMission(),
-            new Frag_getTeam(), new Frag_getAcademics()};
+            new Frag_getTeam(), new Frag_getRV()};
     private static String[] listURL = {"http://con-tactohumano.com/", "http://con-tactohumano.com/about-us/",
             "http://con-tactohumano.com/historia/", "http://con-tactohumano.com/mission-and-values/",
             "http://con-tactohumano.com/team/", "http://con-tactohumano.com/academics/", "http://con-tactohumano.com/professional/",
@@ -55,6 +64,12 @@ public class MainActivity extends AppCompatActivity
             "http://con-tactohumano.com/press/", "http://con-tactohumano.com/blog-2/",
             "http://con-tactohumano.com/testimonials-page/", "http://con-tactohumano.com/contact-us/",
             "http://con-tactohumano.com/profile/register/"};
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         mFrame = (FrameLayout) findViewById(R.id.mFrame);
         fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.mFrame, new Frag_getHome()).commit();
-        currentPage = "home";
+        currentType = "home";
         currentUrl = "http://con-tactohumano.com/";
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -113,6 +128,9 @@ public class MainActivity extends AppCompatActivity
 //                }
 //            });
 //        }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -150,66 +168,91 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+        boolean alreadyLoaded = false;
         int id = item.getItemId();
 
         if (id == R.id.menu_home) {
-            currentPage = "home";
+            currentType = "home";
             currentUrl = "http://con-tactohumano.com/";
         }
         else if (id == R.id.menu_about_us) {
-            currentPage = "about us";
+            currentType = "about us";
             currentUrl = "http://con-tactohumano.com/about-us/";
         }
         else if (id == R.id.menu_history) {
-            currentPage = "history";
+            currentType = "history";
             currentUrl = "http://con-tactohumano.com/historia/";
         }
-        else if(id == R.id.menu_mission){
-            currentPage = "mission";
+        else if (id == R.id.menu_mission) {
+            currentType = "mission";
             currentUrl = "http://con-tactohumano.com/mission-and-values/";
         }
         else if (id == R.id.menu_team) {
-            currentPage = "team";
+            currentType = "team";
             currentUrl = "http://con-tactohumano.com/team/";
         }
         else if (id == R.id.menu_academics) {
-            currentPage = "academics";
+            currentType = "academics";
             currentUrl = "http://con-tactohumano.com/academics/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+
         }
         else if (id == R.id.menu_professionals) {
-            currentPage = "professionals";
+            currentType = "professionals";
             currentUrl = "http://con-tactohumano.com/professional/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
         }
         else if (id == R.id.menu_plans) {
-            currentPage = "plans";
+            currentType = "plans";
             currentUrl = "http://con-tactohumano.com/plans/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
         }
         else if (id == R.id.menu_consulting) {
-            currentPage = "consulting";
+            currentType = "consulting";
             currentUrl = "http://con-tactohumano.com/consulting/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
         }
         else if (id == R.id.menu_press) {
-            currentPage = "press";
+            currentType = "press";
             currentUrl = "http://con-tactohumano.com/press/";
         }
         else if (id == R.id.menu_blog) {
-            currentPage = "blog";
+            currentType = "blog";
             currentUrl = "http://con-tactohumano.com/blog-2/";
         }
         else if (id == R.id.menu_testimonial) {
-            currentPage = "testimonials";
+            currentType = "testimonials";
             currentUrl = "http://con-tactohumano.com/testimonials-page/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, new Frag_getTestimonial()).commit();
         }
         else if (id == R.id.menu_contact) {
-            currentPage = "contact";
+            currentType = "contact";
             currentUrl = "http://con-tactohumano.com/contact-us/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, new Frag_getContact()).commit();
         }
         else if (id == R.id.menu_register) {
-            currentPage = "register";
+            currentType = "register";
             currentUrl = "http://con-tactohumano.com/profile/register/";
         }
+        else if (id == R.id.menu_lang_english) {
+            MainActivity.lang = "?la=en";
+            alreadyLoaded = true;
+            reloadFragement();
+        }
+        else if (id == R.id.menu_lang_espanish) {
+            MainActivity.lang = "?la=en";
+            alreadyLoaded = true;
+            reloadFragement();
+        }
 
-        replaceFragment(currentPage);
+        if (!alreadyLoaded) replaceFragment(currentType);
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -219,8 +262,8 @@ public class MainActivity extends AppCompatActivity
         String url = "";
         int len = listItem.length;
         Fragment f = null;
-        for(int i = 0; i < len; i++){
-            if(listItem[i].equalsIgnoreCase(currentPage)){
+        for (int i = 0; i < len; i++) {
+            if (listItem[i].equalsIgnoreCase(currentType)) {
                 url = listURL[i];
                 currentUrl = url;
                 f = frag[i];
@@ -235,10 +278,11 @@ public class MainActivity extends AppCompatActivity
         String url = "";
         int len = listItem.length;
         Fragment f = null;
-        for(int i = 0; i < len; i++){
-            if(listItem[i].equalsIgnoreCase(currPage)){
+        for (int i = 0; i < len; i++) {
+            if (listItem[i].equalsIgnoreCase(currPage)) {
                 url = listItem[i];
                 f = frag[i];
+                System.out.println("i = " + i);
                 break;
             }
         }
@@ -246,7 +290,7 @@ public class MainActivity extends AppCompatActivity
         fm.beginTransaction().replace(R.id.mFrame, f).commit();
     }
 
-    public static void replaceFragment(Fragment fragment){
+    public static void replaceFragment(Fragment fragment) {
         fm.beginTransaction().replace(R.id.mFrame, fragment).commit();
     }
 
@@ -255,8 +299,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public static void setErrorFrag(String page, String url){
-        currentPage = page;
+    public static void setErrorFrag(String page, String url) {
+        currentType = page;
         currentUrl = url;
         Frag_Error fe;
         fm.beginTransaction().replace(R.id.mFrame, new Frag_Error()).commit();
@@ -266,7 +310,43 @@ public class MainActivity extends AppCompatActivity
         replaceFragment();
     }
 
-    public static class rv_hb_adapter extends RecyclerView.Adapter<rv_hb_adapter.homeBarTv>{
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
+
+    public static class rv_hb_adapter extends RecyclerView.Adapter<rv_hb_adapter.homeBarTv> {
 
         private String[] listItem = {"home", "about us", "services",
                 "plans", "consulting", "press", "blog", "testimonials", "contact", "register"};
@@ -278,7 +358,7 @@ public class MainActivity extends AppCompatActivity
                 "http://con-tactohumano.com/testimonials-page/", "http://con-tactohumano.com/contact-us/",
                 "http://con-tactohumano.com/profile/register/"};
 
-        public class homeBarTv extends RecyclerView.ViewHolder{
+        public class homeBarTv extends RecyclerView.ViewHolder {
 
             public TextView tv;
 

@@ -9,6 +9,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="subject">
+        <item>About</item>
+        <item>Information Request</item>
+        <item>Service Contracted</item>
+        <item>Others</item>
+    </string-array>
+
     <string-array name="languages">
         <item>English</item>
         <item>Spanish</item>

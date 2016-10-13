@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/menu_group1" android:checkableBehavior="single">
+    <group android:id="@+id/menu_home1" android:checkableBehavior="single">
         <item android:id="@+id/menu_home" android:title="Home" />
     </group>
 
-    <group android:id="@+id/menu_group2" android:checkableBehavior="single">
-        <item android:title="Services">
-            <menu>
-                <item android:id="@+id/menu_academics" android:title="Academics"/>
-                <item android:id="@+id/menu_professionals" android:title="Professionals"/>
-            </menu>
-        </item>
-    </group>
-
-    <group android:id="@+id/menu_group3" android:checkableBehavior="single">
+    <group android:id="@+id/menu_about" android:checkableBehavior="single">
         <item android:title="About">
             <menu>
                 <item android:id="@+id/menu_about_us" android:title="About Us" />
@@ -25,7 +16,16 @@
         </item>
     </group>
 
-    <group android:id="@+id/menu_group4" android:checkableBehavior="single">
+    <group android:id="@+id/menu_services" android:checkableBehavior="single">
+        <item android:title="Services">
+            <menu>
+                <item android:id="@+id/menu_academics" android:title="Academics"/>
+                <item android:id="@+id/menu_professionals" android:title="Professionals"/>
+            </menu>
+        </item>
+    </group>
+
+    <group android:id="@+id/menu_others" android:checkableBehavior="single">
         <item android:id="@+id/menu_plans" android:title="Plans" />
         <item android:id="@+id/menu_consulting" android:title="Consulting" />
         <item android:id="@+id/menu_press" android:title="Press"/>
@@ -33,6 +33,15 @@
         <item android:id="@+id/menu_testimonial" android:title="Testimonials"/>
         <item android:id="@+id/menu_contact" android:title="Contact"/>
         <item android:id="@+id/menu_register" android:title="Register"/>
+    </group>
+
+    <group android:id="@+id/menu_language" android:checkableBehavior="single">
+        <item android:title="Language">
+            <menu>
+                <item android:id="@+id/menu_lang_english" android:title="English"/>
+                <item android:id="@+id/menu_lang_espanish" android:title="Espanol"/>
+            </menu>
+        </item>
     </group>
 
 </menu>

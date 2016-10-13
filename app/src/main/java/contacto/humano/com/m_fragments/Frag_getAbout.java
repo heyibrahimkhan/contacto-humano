@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,13 +97,12 @@ public class Frag_getAbout extends Fragment {
         interfaces.add(new i_about_us() {
             @Override
             public void onAboutUsLoaded(final ArrayList<String> list) {
-                System.out.println("About us Loaded");
                 int len = list.size();
                 if(len == 4){
                     new BitmapWorkerTask(iv, list.get(0), null).execute();
                     for(int i = 1; i < len; i++){
                         final int j = i;
-                        tvs.get(j).post(new Runnable() {
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 tvs.get(j-1).setText(list.get(j));
@@ -128,8 +128,8 @@ public class Frag_getAbout extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 

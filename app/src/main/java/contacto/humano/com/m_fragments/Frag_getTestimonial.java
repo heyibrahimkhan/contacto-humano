@@ -4,21 +4,29 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import contacto.humano.com.R;
+import contacto.humano.com.get_data_async.getTestimonials;
+import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
+import contacto.humano.com.m_interfaces.i_general;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Frag_getAcademics.OnFragmentInteractionListener} interface
+ * {@link Frag_getTestimonial.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Frag_getAcademics#newInstance} factory method to
+ * Use the {@link Frag_getTestimonial#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag_getAcademics extends Fragment {
+public class Frag_getTestimonial extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,8 +37,11 @@ public class Frag_getAcademics extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private View mView;
+    private ArrayList mInterface;
+    private RecyclerView rv;
 
-    public Frag_getAcademics() {
+    public Frag_getTestimonial() {
         // Required empty public constructor
     }
 
@@ -40,11 +51,11 @@ public class Frag_getAcademics extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Frag_getAcademics.
+     * @return A new instance of fragment Frag_getTestimonial.
      */
     // TODO: Rename and change types and number of parameters
-    public static Frag_getAcademics newInstance(String param1, String param2) {
-        Frag_getAcademics fragment = new Frag_getAcademics();
+    public static Frag_getTestimonial newInstance(String param1, String param2) {
+        Frag_getTestimonial fragment = new Frag_getTestimonial();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +76,34 @@ public class Frag_getAcademics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.frag_academics, container, false);
+        mView = inflater.inflate(R.layout.frag_testimonials, container, false);
+        initVars();
+        return mView;
+    }
+
+    private void initVars() {
+        mInterface = new ArrayList();
+        rv = (RecyclerView) mView.findViewById(R.id.rv_frag_test);
+        rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rv.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mInterface.add(new i_general() {
+            @Override
+            public void onArrayListLoaded(final ArrayList list) {
+                rv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("on Array Loaded");
+                        rv.setAdapter(new rv_h_th_adapter(list));
+                    }
+                });
+            }
+        });
+        new getTestimonials(mInterface).execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -81,8 +119,8 @@ public class Frag_getAcademics extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
