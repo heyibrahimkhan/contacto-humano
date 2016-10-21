@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    tools:context="contacto.humano.com.m_fragments.Frag_getRV">
+    tools:context="contacto.humano.com.m_fragments.Frag_getServices">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/f_rv"
+        android:id="@+id/f_sevices_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -6,4 +6,6 @@
     <color name="indigo">#4B0082</color>
     <color name="white">#fff</color>
     <color name="gray">#f2f2f2</color>
+    <color name="mblack">#000</color>
+    <color name="orange">#e74e1a</color>
 </resources>

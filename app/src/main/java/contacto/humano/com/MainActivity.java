@@ -29,8 +29,9 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import contacto.humano.com.m_fragments.Frag_Error;
+import contacto.humano.com.m_fragments.Frag_getBlog;
 import contacto.humano.com.m_fragments.Frag_getContact;
-import contacto.humano.com.m_fragments.Frag_getRV;
+import contacto.humano.com.m_fragments.Frag_getServices;
 import contacto.humano.com.m_fragments.Frag_getTestimonial;
 import contacto.humano.com.m_fragments.Frag_getAbout;
 import contacto.humano.com.m_fragments.Frag_getHistory;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private static String[] listItem = {"home", "about us", "history", "mission", "team", "academics", "professionals",
             "plans", "consulting", "press", "blog", "testimonials", "contact", "register"};
     private static Fragment frag[] = {new Frag_getHome(), new Frag_getAbout(), new Frag_getHistory(), new Frag_getMission(),
-            new Frag_getTeam(), new Frag_getRV()};
+            new Frag_getTeam(), new Frag_getServices()};
     private static String[] listURL = {"http://con-tactohumano.com/", "http://con-tactohumano.com/about-us/",
             "http://con-tactohumano.com/historia/", "http://con-tactohumano.com/mission-and-values/",
             "http://con-tactohumano.com/team/", "http://con-tactohumano.com/academics/", "http://con-tactohumano.com/professional/",
@@ -196,14 +197,15 @@ public class MainActivity extends AppCompatActivity
             currentType = "academics";
             currentUrl = "http://con-tactohumano.com/academics/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getServices.newInstance(currentUrl, currentType)).commit();
 
         }
         else if (id == R.id.menu_professionals) {
             currentType = "professionals";
             currentUrl = "http://con-tactohumano.com/professional/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
         }
         else if (id == R.id.menu_plans) {
             currentType = "plans";
@@ -224,6 +226,8 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.menu_blog) {
             currentType = "blog";
             currentUrl = "http://con-tactohumano.com/blog-2/";
+            alreadyLoaded = true;
+            fm.beginTransaction().replace(R.id.mFrame, new Frag_getBlog()).commit();
         }
         else if (id == R.id.menu_testimonial) {
             currentType = "testimonials";
@@ -329,7 +333,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();

@@ -146,11 +146,11 @@ public class getHome extends myGet {
         ArrayList l = new ArrayList();
         if(decor_title.size() == decor_detail.size()){
             for (Element e : decor_title){
-                System.out.println("title = "+e.text());
+//                System.out.println("title = "+e.text());
                 l.add(e.text());
             }
             for (Element e : decor_detail){
-                System.out.println("message = "+e.text());
+//                System.out.println("message = "+e.text());
                 l.add(e.text());
             }
         }
