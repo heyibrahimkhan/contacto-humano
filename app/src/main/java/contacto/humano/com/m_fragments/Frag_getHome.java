@@ -20,23 +20,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
 import contacto.humano.com.R;
 import contacto.humano.com.get_data_async.getHome;
-import contacto.humano.com.m_interfaces.home.i_home_achieve;
-import contacto.humano.com.m_interfaces.home.i_home_decor;
-import contacto.humano.com.m_interfaces.home.i_home_news_post;
-import contacto.humano.com.m_interfaces.home.i_home_test;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
 import contacto.humano.com.m_adapters.home.rv_hp_adapter;
+import contacto.humano.com.m_interfaces.home.i_home_achieve;
+import contacto.humano.com.m_interfaces.home.i_home_news_post;
+import contacto.humano.com.m_interfaces.home.i_home_test;
+import contacto.humano.com.m_interfaces.i_general_array;
+import contacto.humano.com.utils.BitmapWorkerTask;
 
 
 /**
@@ -47,7 +45,7 @@ import contacto.humano.com.m_adapters.home.rv_hp_adapter;
  * Use the {@link Frag_getHome#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag_getHome extends Fragment implements View.OnClickListener, OnMapReadyCallback {
+public class Frag_getHome extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -81,6 +79,11 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     public static ArrayList<Bitmap> fadeBitmap;
     private static int bitmap_num = 0;
     private static double lat = 37.803343, lon = -122.472639;
+    private TextView tvwithbutton;
+    private Button bwithtv;
+    private ArrayList<ImageView> d_ivs;
+    private ArrayList<TextView> decorDetailTvs;
+    private ArrayList<TextView> achiName;
 
     public Frag_getHome() {
         // Required empty public constructor
@@ -94,6 +97,7 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
      * @param param2 Parameter 2.
      * @return A new instance of fragment Frag_getHome.
      */
+
     // TODO: Rename and change types and number of parameters
     public static Frag_getHome newInstance(String param1, String param2) {
         Frag_getHome fragment = new Frag_getHome();
@@ -118,7 +122,7 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.frag_home, container, false);
-        setUpMapIfNeeded();
+//        setUpMapIfNeeded();
         initVars();
         return mView;
     }
@@ -126,7 +130,7 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction("");
         }
     }
 
@@ -136,8 +140,8 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -147,48 +151,71 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         mListener = null;
     }
 
-    private void setUpMapIfNeeded() {
-        if (mMap == null) {
-            fm = getChildFragmentManager();
-            fragment = (SupportMapFragment)fm.findFragmentById(R.id.home_map);
-            if (fragment == null) {
-                fragment = SupportMapFragment.newInstance();
-                fm.beginTransaction().replace(R.id.home_map, fragment).commit();
-            }
-        }
-    }
+//    private void setUpMapIfNeeded() {
+//        if (mMap == null) {
+//            fm = getChildFragmentManager();
+//            fragment = (SupportMapFragment)fm.findFragmentById(R.id.home_map);
+//            if (fragment == null) {
+//                fragment = SupportMapFragment.newInstance();
+//                fm.beginTransaction().replace(R.id.home_map, fragment).commit();
+//            }
+//        }
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        interfaces_home.add(new i_home_decor() {
+//        interfaces_home.add(new i_home_decor() {
+//            @Override
+//            public void onDecorItemsLoaded(ArrayList items) {
+//                int len = items.size();
+//                if(len > 0 && len % 2 == 0){
+////                int half = len / 2;
+//                    for (int i = 0; i < len; i++){
+//                        decorTvs.get(i).setText(items.get(i).toString());
+////                        System.out.println("Text = "+items.get(i).toString());
+//                    }
+//                    System.out.println("Decor Loaded");
+//                }
+//            }
+//        });
+        interfaces_home.add(new i_general_array() {
             @Override
-            public void onDecorItemsLoaded(ArrayList items) {
-                int len = items.size();
-                if(len > 0 && len % 2 == 0){
-//                int half = len / 2;
-                    for (int i = 0; i < len; i++){
-                        decorTvs.get(i).setText(items.get(i).toString());
-//                        System.out.println("Text = "+items.get(i).toString());
-                    }
-                    System.out.println("Decor Loaded");
+            public void onArrayListLoaded(ArrayList list) {
+                int len = list.size();
+                for (int i = 0, j = 0; j < len; i++, j+=4){
+                    decorTvs.get(i).setText(list.get(j).toString());
+                    decorDetailTvs.get(i).setText(list.get(j+1).toString());
+                    new BitmapWorkerTask(d_ivs.get(i), list.get(j+2).toString(), null);
+                    decorDetailTvs.get(i).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            System.out.println("Detail View Clicked");
+                        }
+                    });
+//                    System.out.println("Text = "+items.get(i).toString());
                 }
             }
         });
         interfaces_home.add(new i_home_achieve() {
             @Override
-            public void onHomeAchiLoaded(final ArrayList<String> l) {
+            public void onHomeAchiLoaded(final ArrayList<String> list) {
                 System.out.println("Achievments Loaded");
-                int len = tv_achievement.size();
+                int len = list.size();
                 if(len > 0) {
-                    for (int i = 0; i < 1; i++) {
+                    for (int i = 0, k = 0; k < len; i++, k+=2) {
                         final int j = i;
+                        final int l = k;
+                        achiName.get(j).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                achiName.get(j).setText(list.get(l));
+                            }
+                        });
                         tv_achievement.get(j).post(new Runnable() {
                             @Override
                             public void run() {
-                                if(l.size() < j) {
-                                    tv_achievement.get(j).setText(l.get(j));
-                                }
+                                tv_achievement.get(j).setText(list.get(l+1));
                             }
                         });
                     }
@@ -219,9 +246,32 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
                 });
             }
         });
-        if (mMap == null) {
-            fragment.getMapAsync(this);
-        }
+        interfaces_home.add(new i_general_array() {
+            @Override
+            public void onArrayListLoaded(final ArrayList list) {
+                tvwithbutton.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvwithbutton.setText(list.get(0).toString());
+                    }
+                });
+                bwithtv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        bwithtv.setText(list.get(1).toString());
+                    }
+                });
+                bwithtv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mListener.forNewFragment("home", "contact");
+                    }
+                });
+            }
+        });
+//        if (mMap == null) {
+//            fragment.getMapAsync(this);
+//        }
         new getHome(interfaces_home).execute();
 //        onResumeDone = true;
     }
@@ -231,24 +281,12 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
 
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        if(googleMap != null) {
-            mMap = googleMap;
-            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title("Storey Ave"));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 16.0f));
-        }
-    }
-
 //    @Override
-//    public void onDecorItemsLoaded(ArrayList items) {
-//        int len = items.size();
-//        if(len > 0 && len % 2 == 0){
-////            int half = len / 2;
-//            for (int i = 0; i < len; i++){
-//                decorTvs.get(i).setText(items.get(i).toString());
-//                System.out.println("Text = "+items.get(i).toString());
-//            }
+//    public void onMapReady(GoogleMap googleMap) {
+//        if(googleMap != null) {
+//            mMap = googleMap;
+//            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title("Storey Ave"));
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 16.0f));
 //        }
 //    }
 
@@ -264,10 +302,23 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String string);
+        void forNewFragment(String type_source, String type_destination);
     }
 
     private void initVars() {
+        achiName = new ArrayList<>();
+        achiName.add((TextView) mView.findViewById(R.id.fh_cc_tv));
+        achiName.add((TextView) mView.findViewById(R.id.fh_c_tv));
+        achiName.add((TextView) mView.findViewById(R.id.fh_aw_tv));
+        achiName.add((TextView) mView.findViewById(R.id.fh_sc_tv));
+        d_ivs = new ArrayList<>();
+        d_ivs.add((ImageView) mView.findViewById(R.id.h_d_iv1));
+        d_ivs.add((ImageView) mView.findViewById(R.id.h_d_iv2));
+        d_ivs.add((ImageView) mView.findViewById(R.id.h_d_iv3));
+        tvwithbutton = (TextView) mView.findViewById(R.id.fh_tvwithbutton);
+        bwithtv = (Button) mView.findViewById(R.id.fh_bwithtv);
+
         interfaces_home = new ArrayList<>();
 
         bot_top = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.bot_top);
@@ -277,9 +328,9 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l1));
         decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l2));
         decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l3));
-        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l4));
-        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l5));
-        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l6));
+//        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l4));
+//        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l5));
+//        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l6));
         int len_lls = decorLls.size();
         for (int i = 0; i < len_lls; i++){
             decorLls.get(i).setOnClickListener(new View.OnClickListener() {
@@ -310,22 +361,23 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         decorTvs.add((TextView) mView.findViewById(R.id.home_decor1_title));
         decorTvs.add((TextView) mView.findViewById(R.id.home_decor2_title));
         decorTvs.add((TextView) mView.findViewById(R.id.home_decor3_title));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor4_title));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor5_title));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor6_title));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor1_detail));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor2_detail));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor3_detail));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor4_detail));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor5_detail));
-        decorTvs.add((TextView) mView.findViewById(R.id.home_decor6_detail));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor4_title));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor5_title));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor6_title));
+        decorDetailTvs = new ArrayList<TextView>();
+        decorDetailTvs.add((TextView) mView.findViewById(R.id.home_decor1_detail));
+        decorDetailTvs.add((TextView) mView.findViewById(R.id.home_decor2_detail));
+        decorDetailTvs.add((TextView) mView.findViewById(R.id.home_decor3_detail));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor4_detail));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor5_detail));
+//        decorTvs.add((TextView) mView.findViewById(R.id.home_decor6_detail));
         decorUps = new ArrayList<TextView>();
         decorUps.add((TextView) mView.findViewById(R.id.decor_up1));
         decorUps.add((TextView) mView.findViewById(R.id.decor_up2));
         decorUps.add((TextView) mView.findViewById(R.id.decor_up3));
-        decorUps.add((TextView) mView.findViewById(R.id.decor_up4));
-        decorUps.add((TextView) mView.findViewById(R.id.decor_up5));
-        decorUps.add((TextView) mView.findViewById(R.id.decor_up6));
+//        decorUps.add((TextView) mView.findViewById(R.id.decor_up4));
+//        decorUps.add((TextView) mView.findViewById(R.id.decor_up5));
+//        decorUps.add((TextView) mView.findViewById(R.id.decor_up6));
         int len = decorUps.size();
         for (int i = 0; i < len; i++){
             final int j = i;
@@ -373,15 +425,15 @@ public class Frag_getHome extends Fragment implements View.OnClickListener, OnMa
         fadeAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-//                System.out.println("Start Fade Anim");
-//                bitmap_num = (bitmap_num++) % fadeBitmap.size();
-//                fadeIv.setImageBitmap(fadeBitmap.get(bitmap_num));
+
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 System.out.println("End Fade Anim");
+                System.out.println("fadeBitmapSize = "+fadeBitmap.size());
                 bitmap_num = (++bitmap_num) % fadeBitmap.size();
+                System.out.println("Bitmap Num = "+bitmap_num);
                 fadeIv.setImageBitmap(fadeBitmap.get(bitmap_num));
                 fadeIv.clearAnimation();
                 fadeIv.startAnimation(fadeAnim);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import contacto.humano.com.MainActivity;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
-import contacto.humano.com.m_interfaces.i_general;
+import contacto.humano.com.m_interfaces.i_general_array;
 
 /**
  * Created by Ibrahim Ali Khan on 10/12/2016.
@@ -40,7 +40,7 @@ public class getTestimonials extends myGet {
             Elements texts = document.select("div.katb_test_text p");
             list = getData(imgUrl, names, titles, texts);
             if (len_mInterfaces > 0){
-                ((i_general) mInterfaces.get(0)).onArrayListLoaded(list);
+                ((i_general_array) mInterfaces.get(0)).onArrayListLoaded(list);
             }
         }
         catch (Exception ignored){

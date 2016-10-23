@@ -22,16 +22,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import contacto.humano.com.m_fragments.Frag_Error;
+import contacto.humano.com.m_fragments.Frag_Registeration;
 import contacto.humano.com.m_fragments.Frag_getBlog;
+import contacto.humano.com.m_fragments.Frag_getBlogPage;
 import contacto.humano.com.m_fragments.Frag_getContact;
+import contacto.humano.com.m_fragments.Frag_getPress;
+import contacto.humano.com.m_fragments.Frag_getPrivacy;
 import contacto.humano.com.m_fragments.Frag_getServices;
+import contacto.humano.com.m_fragments.Frag_getTerms;
 import contacto.humano.com.m_fragments.Frag_getTestimonial;
 import contacto.humano.com.m_fragments.Frag_getAbout;
 import contacto.humano.com.m_fragments.Frag_getHistory;
@@ -42,7 +49,7 @@ import contacto.humano.com.m_fragments.Frag_getWebView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Frag_getHome.OnFragmentInteractionListener,
-        Frag_Error.OnFragmentInteractionListener, Frag_getAbout.OnFragmentInteractionListener {
+        Frag_Error.OnFragmentInteractionListener, Frag_getAbout.OnFragmentInteractionListener, Frag_getBlog.OnFragmentInteractionListener {
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -92,14 +99,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -112,23 +119,6 @@ public class MainActivity extends AppCompatActivity
 
         urlAppend = "";
 
-//        language = getResources().getStringArray(R.array.languages);
-
-
-//        Spinner spinner = (Spinner) navigationView.getMenu().getItem(5);
-//        if(spinner != null) {
-//            spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, language));
-//            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    Toast.makeText(MainActivity.this, language[position], Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {
-//                }
-//            });
-//        }
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -197,31 +187,39 @@ public class MainActivity extends AppCompatActivity
             currentType = "academics";
             currentUrl = "http://con-tactohumano.com/academics/";
             alreadyLoaded = true;
-//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getServices.newInstance(currentUrl, currentType)).commit();
-
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getServices.newInstance(currentUrl, currentType)).commit();
+            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_professionals) {
             currentType = "professionals";
             currentUrl = "http://con-tactohumano.com/professional/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
+            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_plans) {
             currentType = "plans";
             currentUrl = "http://con-tactohumano.com/plans/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_consulting) {
             currentType = "consulting";
             currentUrl = "http://con-tactohumano.com/consulting/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_press) {
             currentType = "press";
             currentUrl = "http://con-tactohumano.com/press/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getPress());
         }
         else if (id == R.id.menu_blog) {
             currentType = "blog";
@@ -244,6 +242,16 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.menu_register) {
             currentType = "register";
             currentUrl = "http://con-tactohumano.com/profile/register/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_Registeration());
+        }
+        else if (id == R.id.menu_privacy) {
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getPrivacy());
+        }
+        else if (id == R.id.menu_term) {
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getTerms());
         }
         else if (id == R.id.menu_lang_english) {
             MainActivity.lang = "?la=en";
@@ -251,7 +259,7 @@ public class MainActivity extends AppCompatActivity
             reloadFragement();
         }
         else if (id == R.id.menu_lang_espanish) {
-            MainActivity.lang = "?la=en";
+            MainActivity.lang = "?la=es";
             alreadyLoaded = true;
             reloadFragement();
         }
@@ -347,6 +355,20 @@ public class MainActivity extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    @Override
+    public void onFragmentInteraction(String string) {
+        replaceFragment(Frag_getBlogPage.newInstance("BlogPage", string));
+    }
+
+    @Override
+    public void forNewFragment(String type_source, String type_destination) {
+        if(type_source.equalsIgnoreCase("home")){
+            if(type_destination.equalsIgnoreCase("contact")) {
+                replaceFragment(new Frag_getContact());
+            }
+        }
     }
 
     public static class rv_hb_adapter extends RecyclerView.Adapter<rv_hb_adapter.homeBarTv> {

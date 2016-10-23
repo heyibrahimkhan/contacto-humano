@@ -40,7 +40,7 @@ public class Frag_getAbout extends Fragment {
     private View mView;
     private ImageView iv;
     private ArrayList<Object> interfaces;
-    private ArrayList<TextView> tvs;
+    private TextView tv;
 
     public Frag_getAbout() {
         // Required empty public constructor
@@ -84,10 +84,7 @@ public class Frag_getAbout extends Fragment {
 
     private void initVars() {
         interfaces = new ArrayList<>();
-        tvs = new ArrayList<>();
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv1));
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv2));
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv3));
+        tv = ((TextView) mView.findViewById(R.id.f_about_tv));
         iv = (ImageView) mView.findViewById(R.id.f_about_iv);
     }
 
@@ -98,17 +95,14 @@ public class Frag_getAbout extends Fragment {
             @Override
             public void onAboutUsLoaded(final ArrayList<String> list) {
                 int len = list.size();
-                if(len == 4){
+                if(len == 2){
                     new BitmapWorkerTask(iv, list.get(0), null).execute();
-                    for(int i = 1; i < len; i++){
-                        final int j = i;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tvs.get(j-1).setText(list.get(j));
-                            }
-                        });
-                    }
+                    tv.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv.setText(list.get(1));
+                        }
+                    });
                 }
             }
         });

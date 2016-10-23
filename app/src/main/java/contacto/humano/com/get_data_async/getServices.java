@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import contacto.humano.com.MainActivity;
 import contacto.humano.com.m_adapters.services.adapter_services;
-import contacto.humano.com.m_interfaces.i_general;
+import contacto.humano.com.m_interfaces.i_general_array;
 
 /**
  * Created by Ibrahim Ali Khan on 10/13/2016.
@@ -42,7 +42,7 @@ public class getServices extends myGet {
                 Elements href = document.select("a.button.product_type_simple.ajax_add_to_cart.icon_right.bordered");
                 Elements productId = document.select("a.button.product_type_simple.ajax_add_to_cart.icon_right.bordered");
                 if(mInterfaces.size() > 0){
-                    ((i_general) mInterfaces.get(0)).onArrayListLoaded(getData(imgUrl, title, postedBy, href, productId));
+                    ((i_general_array) mInterfaces.get(0)).onArrayListLoaded(getData(imgUrl, title, postedBy, href, productId));
                 }
             }
             else if(type.equalsIgnoreCase("professionals")){

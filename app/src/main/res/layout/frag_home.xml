@@ -35,6 +35,8 @@
                 android:id="@+id/home_ad_post_title" />
 
             <LinearLayout
+                android:weightSum="6"
+                android:animateLayoutChanges="true"
                 android:paddingBottom="0dp"
                 android:paddingTop="16dp"
                 android:paddingLeft="16dp"
@@ -44,13 +46,15 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_weight="6"
+                    android:id="@+id/fh_tvwithbutton"
+                    android:layout_weight="4"
                     android:text="Looking for a first class business consultant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:layout_weight="4"
+                    android:id="@+id/fh_bwithtv"
+                    android:layout_weight="2"
                     android:text="Get a quote?"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -61,15 +65,14 @@
 
         <LinearLayout
             android:id="@+id/h_l1sparent"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/h_rl1"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_below="@+id/h_rl1" >
 
             <LinearLayout
+                android:animateLayoutChanges="true"
                 android:id="@+id/h_l1"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
@@ -78,9 +81,15 @@
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
                     android:layout_width="150dp"
                     android:layout_height="150dp">
+
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/def_post_decor"
+                        android:id="@+id/h_d_iv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:textStyle="bold"
@@ -127,9 +136,15 @@
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
                     android:layout_width="150dp"
                     android:layout_height="150dp">
+
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/def_post_decor"
+                        android:id="@+id/h_d_iv2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:textStyle="bold"
@@ -176,9 +191,15 @@
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
                     android:layout_width="150dp"
                     android:layout_height="150dp">
+
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/def_post_decor"
+                        android:id="@+id/h_d_iv3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:textStyle="bold"
@@ -225,162 +246,163 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:scrollbars="horizontal"
-                android:layout_marginTop="16dp"
-                android:id="@+id/h_l2"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <!--<LinearLayout-->
+                <!--android:scrollbars="horizontal"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:id="@+id/h_l2"-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
 
-                <RelativeLayout
-                    android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                <!--<RelativeLayout-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:background="@drawable/def_post_decor"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="150dp">-->
 
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="^"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:background="@color/indigo"
-                        android:id="@+id/decor_up4"
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                    <!--<TextView-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:text="^"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:gravity="center"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:id="@+id/decor_up4"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="20dp" />-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:id="@+id/decor_l4"
-                        android:background="@color/indigo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:gravity="center"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:id="@+id/decor_l4"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_gravity="center"
-                            android:textSize="20sp"
-                            android:text="Title"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor4_title"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:textSize="20sp"-->
+                            <!--android:text="Title"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor4_title"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                        <TextView
-                            android:text="Detail"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor4_detail"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:text="Detail"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor4_detail"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <RelativeLayout
-                    android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                <!--<RelativeLayout-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:background="@drawable/def_post_decor"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="150dp">-->
 
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="^"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:background="@color/indigo"
-                        android:id="@+id/decor_up5"
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                    <!--<TextView-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:text="^"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:gravity="center"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:id="@+id/decor_up5"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="20dp" />-->
 
-                    <LinearLayout
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:orientation="vertical"
-                        android:id="@+id/decor_l5"
-                        android:background="@color/indigo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:gravity="center"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:id="@+id/decor_l5"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_gravity="center"
-                            android:textSize="20sp"
-                            android:text="Title"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor5_title"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:textSize="20sp"-->
+                            <!--android:text="Title"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor5_title"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                        <TextView
-                            android:text="Detail"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor5_detail"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:text="Detail"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor5_detail"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <RelativeLayout
-                    android:layout_margin="5dp"
-                    android:background="@drawable/def_post_decor"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                <!--<RelativeLayout-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:background="@drawable/def_post_decor"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="150dp">-->
 
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="^"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:background="@color/indigo"
-                        android:id="@+id/decor_up6"
-                        android:layout_alignParentBottom="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                    <!--<TextView-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:text="^"-->
+                        <!--android:textAlignment="center"-->
+                        <!--android:gravity="center"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:id="@+id/decor_up6"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="20dp" />-->
 
-                    <LinearLayout
-                        android:gravity="center"
-                        android:visibility="gone"
-                        android:orientation="vertical"
-                        android:id="@+id/decor_l6"
-                        android:background="@color/indigo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:gravity="center"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:id="@+id/decor_l6"-->
+                        <!--android:background="@color/indigo"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_gravity="center"
-                            android:textSize="20sp"
-                            android:text="Title"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor6_title"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:textSize="20sp"-->
+                            <!--android:text="Title"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor6_title"-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                        <TextView
-                            android:text="Detail"
-                            android:textColor="@color/white"
-                            android:id="@+id/home_decor6_detail"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <!--<TextView-->
+                            <!--android:text="Detail"-->
+                            <!--android:textColor="@color/white"-->
+                            <!--android:id="@+id/home_decor6_detail"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
         </LinearLayout>
 
@@ -437,6 +459,7 @@
                             android:layout_height="wrap_content" />
 
                         <TextView
+                            android:id="@+id/fh_cc_tv"
                             android:text="Cases Completed"
                             android:textSize="7sp"
                             android:layout_width="wrap_content"
@@ -459,6 +482,7 @@
                             android:layout_height="wrap_content" />
 
                         <TextView
+                            android:id="@+id/fh_c_tv"
                             android:text="Consultants"
                             android:textSize="7sp"
                             android:layout_width="wrap_content"
@@ -481,6 +505,7 @@
                             android:layout_height="wrap_content" />
 
                         <TextView
+                            android:id="@+id/fh_aw_tv"
                             android:text="Award Winning"
                             android:textSize="7sp"
                             android:layout_width="wrap_content"
@@ -503,6 +528,7 @@
                             android:layout_height="wrap_content" />
 
                         <TextView
+                            android:id="@+id/fh_sc_tv"
                             android:text="Satisfied Customers"
                             android:textSize="7sp"
                             android:layout_width="wrap_content"
@@ -627,7 +653,7 @@
                     android:textColor="@color/white"
                     android:padding="16dp"
                     android:gravity="center"
-                    android:text="To help entrepreneurs get their act together before they talk to investors."
+                    android:text="We help professionals and institutions to achieve their goals"
                     android:maxWidth="225dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
@@ -769,36 +795,36 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/h_l6"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_below="@+id/h_l5"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/h_l6"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_below="@+id/h_l5"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
-            <TextView
-                android:gravity="center"
-                android:textSize="20sp"
-                android:text="MAP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="20sp"-->
+                <!--android:text="MAP"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
-            <TextView
-                android:background="@color/colorAccent"
-                android:layout_width="8dp"
-                android:layout_height="3dp" />
+            <!--<TextView-->
+                <!--android:background="@color/colorAccent"-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="3dp" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <FrameLayout
-            android:layout_below="@+id/h_l6"
-            android:id="@+id/home_map"
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
+        <!--<FrameLayout-->
+            <!--android:layout_below="@+id/h_l6"-->
+            <!--android:id="@+id/home_map"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="300dp">-->
 
-        </FrameLayout>
+        <!--</FrameLayout>-->
 
     </RelativeLayout>
 

@@ -15,6 +15,7 @@ import contacto.humano.com.m_interfaces.home.i_home_news_post;
 import contacto.humano.com.m_interfaces.home.i_home_test;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
 import contacto.humano.com.m_adapters.home.rv_hp_adapter;
+import contacto.humano.com.m_interfaces.i_general_array;
 
 /**
  * Created by Ibrahim Ali Khan on 10/8/2016.
@@ -39,17 +40,27 @@ public class getHome extends myGet {
         try{
             int len_mInterfaces = mInterfaces.size();
             Document document = Jsoup.connect(url).get();
-//            String vc_custom_heading = document.select("div.vc_custom_heading").text();
-//            String b_vc_custom_heading = document.select("div.vc_cta3-actions").text();
+
+            String vc_custom_heading = document.select("header.vc_cta3-content-header div h2").text();
+            Elements b_vc_custom_heading = document.select("div.vc_cta3-actions div a");
+            if(len_mInterfaces > 4){
+                ((i_general_array) mInterfaces.get(4)).onArrayListLoaded(getItemWithButtom(vc_custom_heading, b_vc_custom_heading));
+            }
 
             //Decor Items
             Elements decor_title = document.select("div.title h6 span");
-            Elements decor_detail = document.select("div.info_box_text p");
-            ((i_home_decor) mInterfaces.get(0)).onDecorItemsLoaded(getHomeDecorItems(decor_title, decor_detail));
+            Elements decor_detail = document.select("a.read_more span");
+            Elements decor_image_url = document.select("div.info_box_image img");
+            Elements decor_readMore = document.select("a.read_more");
+//            ((i_home_decor) mInterfaces.get(0)).onDecorItemsLoaded(getHomeDecorItems(decor_title, decor_detail));
+            ((i_general_array) mInterfaces.get(0)).onArrayListLoaded(getHomeDecorItems(decor_title, decor_detail, decor_image_url, decor_readMore));
+
 
             //Achievements Items
+            Elements achiName = document.select("div.counter_title");
+            Elements achi = document.select("h3.no_stripe");
             if(mInterfaces.size() > 1) {
-            ((i_home_achieve)mInterfaces.get(1)).onHomeAchiLoaded(getHomeAchiList(document.select("h3.no_stripe")));
+                ((i_home_achieve)mInterfaces.get(1)).onHomeAchiLoaded(getHomeAchiList(achi, achiName));
             }
 
             if(len_mInterfaces > 2){
@@ -77,9 +88,38 @@ public class getHome extends myGet {
             }
         }
         catch (Exception ignored){
+            if(!isCancelled())
             MainActivity.setErrorFrag("home", url);
         }
         return super.doInBackground(objects);
+    }
+
+    private ArrayList getHomeDecorItems(Elements decor_title, Elements decor_detail, Elements decor_image_url, Elements readMore) {
+        ArrayList list = new ArrayList<String>();
+        int len = decor_detail.size();
+//        System.out.println("Len = "+len);
+        for (int i = 0; i < len; i++){
+            list.add(decor_title.get(i).text());
+            list.add(decor_detail.get(i).text());
+            list.add(decor_image_url.get(i).absUrl("src"));
+            list.add(readMore.get(i).absUrl("href"));
+//            System.out.println("Title = "+decor_title.get(i).text());
+//            System.out.println("Detail = "+decor_detail.get(i).text());
+//            System.out.println("absUrl = "+decor_image_url.get(i).absUrl("src"));
+//            System.out.println("href = "+readMore.get(i).absUrl("href"));
+        }
+        return list;
+    }
+
+    private ArrayList getItemWithButtom(String vc_custom_heading, Elements b_vc_custom_heading) {
+        ArrayList list = new ArrayList();
+        list.add(vc_custom_heading);
+        list.add(b_vc_custom_heading.text());
+        list.add(b_vc_custom_heading.attr("href"));
+//        for (int i = 0; i < list.size(); i++){
+//            System.out.println("My Elements = "+list.get(i).toString());
+//        }
+        return list;
     }
 
     private ArrayList<rv_hp_adapter.class_home_post> getNewsPostMat(Elements news_post_url, Elements news_post_goto, Elements news_post_date) {
@@ -133,12 +173,20 @@ public class getHome extends myGet {
         return l;
     }
 
-    private ArrayList getHomeAchiList(Elements home_achi_num) {
+    private ArrayList getHomeAchiList(Elements home_achi_num, Elements achiName) {
         ArrayList<String> s = new ArrayList<>();
-        for (Element e : home_achi_num){
-            s.add(e.text());
-//            System.out.println("achi = "+e.text());
+        int len = achiName.size();
+//        System.out.println("len = "+len);
+        for (int i = 0; i < len; i++){
+            s.add(achiName.get(i).text());
+            s.add(home_achi_num.get(i).text());
+//            System.out.println("achi = "+achiName.get(i).text());
+//            System.out.println("num = "+home_achi_num.get(i).text());
         }
+//        for (Element e : home_achi_num){
+//            s.add(e.text());
+//            System.out.println("achi = "+e.text());
+//        }
         return s;
     }
 

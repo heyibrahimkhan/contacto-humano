@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import contacto.humano.com.R;
 import contacto.humano.com.get_data_async.getTestimonials;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
-import contacto.humano.com.m_interfaces.i_general;
+import contacto.humano.com.m_interfaces.i_general_array;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +91,7 @@ public class Frag_getTestimonial extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mInterface.add(new i_general() {
+        mInterface.add(new i_general_array() {
             @Override
             public void onArrayListLoaded(final ArrayList list) {
                 rv.post(new Runnable() {

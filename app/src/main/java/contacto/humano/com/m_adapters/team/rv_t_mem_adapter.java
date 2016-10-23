@@ -23,7 +23,7 @@ public class rv_t_mem_adapter extends RecyclerView.Adapter<rv_t_mem_adapter.hold
     public rv_t_mem_adapter(ArrayList list){
         list_team = new ArrayList<>();
         list_team = list;
-        System.out.println(list_team.size()+" is the size");
+//        System.out.println(list_team.size()+" is the size");
 //        for (int i = 0; i < len; i++){
 //            System.out.println(i+" = "+list_team.get(i).mem_name);
 //            System.out.println(i+" = "+list_team.get(i).mem_occu);

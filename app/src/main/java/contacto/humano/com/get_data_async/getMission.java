@@ -34,7 +34,7 @@ public class getMission extends myGet {
             int len_mInterfaces = mInterfaces.size();
             Document document = Jsoup.connect(url).get();
             ArrayList<String> list = new ArrayList<>();
-//            list.add(getImageUrl(document.select("img.alignright")));
+            list.add(getImageUrl(document.select("div.wpb_wrapper p img")));
             list = getParas(document.select("div.wpb_wrapper p"), list);
             if (len_mInterfaces > 0){
                 ((i_about_us) mInterfaces.get(0)).onAboutUsLoaded(list);
@@ -46,12 +46,26 @@ public class getMission extends myGet {
         return null;
     }
 
-    private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {
-        for (Element e : paras){
-            if(e.text().contains("e")) {
-                list.add(e.text());
+    private String getImageUrl(Elements imgUrl) {
+        String url = "";
+        int len = imgUrl.size();
+        if(len == 1){
+            for (Element e : imgUrl){
+                url = e.absUrl("src");
             }
         }
+        return url;
+    }
+
+    private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {
+        String s = "";
+        for (Element e : paras){
+            if(e.text().contains("e")) {
+                s = s.concat(e.text()+"\n\n");
+//                list.add(e.text());
+            }
+        }
+        list.add(s);
         return list;
     }
 

@@ -39,7 +39,7 @@ public class Frag_getHistory extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View mView;
     private ArrayList<Object> mInterface;
-    private ArrayList<TextView> tvs;
+    private TextView tv;
     private ImageView iv;
 
     public Frag_getHistory() {
@@ -85,10 +85,7 @@ public class Frag_getHistory extends Fragment {
     private void initVars() {
         mInterface = new ArrayList<Object>();
         iv = (ImageView) mView.findViewById(R.id.f_about_iv);
-        tvs = new ArrayList<TextView>();
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv1));
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv2));
-        tvs.add((TextView) mView.findViewById(R.id.f_about_tv3));
+        tv = ((TextView) mView.findViewById(R.id.f_about_tv));
     }
 
     @Override
@@ -98,17 +95,14 @@ public class Frag_getHistory extends Fragment {
             @Override
             public void onAboutUsLoaded(final ArrayList<String> list) {
                 int len = list.size();
-                if(len == 4){
+                if(len == 2){
                     new BitmapWorkerTask(iv, list.get(0), null).execute();
-                    for(int i = 1; i < len; i++){
-                        final int j = i;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tvs.get(j-1).setText(list.get(j));
-                            }
-                        });
-                    }
+                    tv.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv.setText(list.get(1));
+                        }
+                    });
                 }
             }
         });

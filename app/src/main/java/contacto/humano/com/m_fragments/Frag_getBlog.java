@@ -19,7 +19,8 @@ import contacto.humano.com.R;
 import contacto.humano.com.get_data_async.getBlog;
 import contacto.humano.com.m_adapters.blog.adapter_blog_si;
 import contacto.humano.com.m_adapters.blog.adapter_short_blog;
-import contacto.humano.com.m_interfaces.i_general;
+import contacto.humano.com.m_interfaces.i_general_array;
+import contacto.humano.com.m_interfaces.i_general_string;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,16 +117,12 @@ public class Frag_getBlog extends Fragment {
             rvs.get(i).setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
             rvs.get(i).setItemAnimator(new DefaultItemAnimator());
         }
-//        rvs.get(0).setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mInterfaces.add(new i_general() {
+        mInterfaces.add(new i_general_array() {
             @Override
             public void onArrayListLoaded(final ArrayList list) {
-                System.out.println("Blog Array list Loaded");
                 String title = list.get(0).toString();
                 int len = list.size();
-                System.out.println("List size = "+len);
                 if(len >= 3) {
-    //                    System.out.println("List size = "+len);
                     mListArchives = new ArrayList<adapter_blog_si.blog_side_item>();
                     for (int i = 1; i < len; i+=2) {
                         mListArchives.add(new adapter_blog_si.blog_side_item(list.get(i).toString() ,list.get(i+1).toString()));
@@ -141,7 +138,6 @@ public class Frag_getBlog extends Fragment {
                         rvs.get(0).post(new Runnable() {
                             @Override
                             public void run() {
-                            System.out.println("Archives");
                             rvs.get(0).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListArchives));
                             subViews.get(0).requestLayout();
                             }
@@ -151,13 +147,11 @@ public class Frag_getBlog extends Fragment {
                 }
             }
         });
-        mInterfaces.add(new i_general() {
+        mInterfaces.add(new i_general_array() {
             @Override
             public void onArrayListLoaded(final ArrayList list) {
-                System.out.println("Blog Array list Loaded");
                 String title = list.get(0).toString();
                 int len = list.size();
-                System.out.println("List size = "+len);
                 if(len >= 3) {
                     mListCategories = new ArrayList<adapter_blog_si.blog_side_item>();
                     for (int i = 1; i < len; i+=2) {
@@ -174,7 +168,6 @@ public class Frag_getBlog extends Fragment {
                             rvs.get(1).post(new Runnable() {
                                 @Override
                                 public void run() {
-//                                    System.out.println("Archives");
                                     rvs.get(1).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListCategories));
                                     subViews.get(1).requestLayout();
                                 }
@@ -184,13 +177,18 @@ public class Frag_getBlog extends Fragment {
                 }
             }
         });
-        mInterfaces.add(new i_general() {
+        mInterfaces.add(new i_general_array() {
             @Override
             public void onArrayListLoaded(final ArrayList list) {
                 rv_sb.post(new Runnable() {
                     @Override
                     public void run() {
-                        rv_sb.setAdapter(new adapter_short_blog(list));
+                        rv_sb.setAdapter(new adapter_short_blog(list, new i_general_string() {
+                            @Override
+                            public void onStringTransfer(String string) {
+                                mListener.onFragmentInteraction(string);
+                            }
+                        }));
                     }
                 });
             }
@@ -201,7 +199,7 @@ public class Frag_getBlog extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(uri.toString());
         }
     }
 
@@ -234,6 +232,6 @@ public class Frag_getBlog extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String string);
     }
 }

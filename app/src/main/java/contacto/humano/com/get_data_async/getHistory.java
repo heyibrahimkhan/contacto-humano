@@ -20,7 +20,7 @@ public class getHistory extends myGet{
 
     public getHistory(ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/historia/" + MainActivity.lang;
+        url = "http://con-tactohumano.com/history/" + MainActivity.lang;
     }
 
     @Override
@@ -47,11 +47,15 @@ public class getHistory extends myGet{
     }
 
     private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {
+        String s = "";
         for (Element e : paras){
             if(e.text().contains("e")) {
-                list.add(e.text());
+                s = s.concat(e.text()+"\n\n");
+//                list.add(e.text());
             }
         }
+//        System.out.println("Paras = "+s);
+        list.add(s);
         return list;
     }
 

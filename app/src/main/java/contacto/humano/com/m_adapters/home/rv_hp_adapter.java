@@ -70,6 +70,7 @@ public class rv_hp_adapter extends RecyclerView.Adapter<rv_hp_adapter.homepostHo
         new BitmapWorkerTask(holder.hp_image, list_post.get(position).url, new BitmapWorkerTask.downloadCompleteCallBack() {
             @Override
             public void onDownComp(Bitmap bitmap) {
+                System.out.println("Bitmap Downloaded");
                 Frag_getHome.fadeBitmap.add(bitmap);
                 if(timeInt < 1) {
                     Frag_getHome.startFadeAnim();

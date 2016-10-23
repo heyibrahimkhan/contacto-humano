@@ -47,11 +47,14 @@ public class getAboutUs extends myGet {
     }
 
     private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {
+        String s = "";
         for (Element e : paras){
             if(e.text().contains("e")) {
-                list.add(e.text());
+                s = s.concat(e.text()+"\n\n");
+//                list.add(e.text());
             }
         }
+        list.add(s);
         return list;
     }
 

@@ -35,6 +35,15 @@
         <item android:id="@+id/menu_register" android:title="Register"/>
     </group>
 
+    <group android:id="@+id/menu_term_priv" android:checkableBehavior="single">
+        <item android:title="Privacy &amp; Terms">
+            <menu>
+                <item android:id="@+id/menu_privacy" android:title="Privacy"/>
+                <item android:id="@+id/menu_term" android:title="Terms &amp; Conditions"/>
+            </menu>
+        </item>
+    </group>
+
     <group android:id="@+id/menu_language" android:checkableBehavior="single">
         <item android:title="Language">
             <menu>
