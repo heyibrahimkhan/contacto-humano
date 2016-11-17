@@ -136,7 +136,7 @@ public class adapter_short_blog extends RecyclerView.Adapter<adapter_short_blog.
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CardView Clicked");
+//                System.out.println("CardView Clicked");
                 igs.onStringTransfer(itemList.get(position).getUrlReadMore());
             }
         });

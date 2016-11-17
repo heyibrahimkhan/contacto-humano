@@ -1,5 +1,7 @@
 package contacto.humano.com.get_data_async;
 
+import android.text.Html;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 
 import contacto.humano.com.MainActivity;
 import contacto.humano.com.m_interfaces.about_us.i_about_us;
+import contacto.humano.com.m_interfaces.i_general_string;
 
 /**
  * Created by Ibrahim Ali Khan on 10/11/2016.
@@ -20,7 +23,7 @@ public class getAboutUs extends myGet {
 
     public getAboutUs(ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/about-us/"+ MainActivity.lang;
+        url = "http://con-tactohumano.com/nosotros/"+ MainActivity.lang;
     }
 
     @Override
@@ -39,11 +42,22 @@ public class getAboutUs extends myGet {
             if (len_mInterfaces > 0){
                 ((i_about_us) mInterfaces.get(0)).onAboutUsLoaded(list);
             }
+            if (len_mInterfaces > 1){
+                ((i_general_string) mInterfaces.get(1)).onStringTransfer(getHtmlString(document.select("div.entry-content div")));
+            }
         }
         catch (Exception ignored){
 
         }
         return null;
+    }
+
+    private String getHtmlString(Elements select) {
+        String s = "";
+        int len = select.size();
+        for (int i = 0; i < len; i++)
+        s = s.concat(Html.fromHtml(select.get(i).html()).toString());
+        return s;
     }
 
     private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {

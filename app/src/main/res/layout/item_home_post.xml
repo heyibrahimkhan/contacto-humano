@@ -9,10 +9,11 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv_fhp"
         app:cardElevation="5dp"
         app:cardCornerRadius="5dp"
         android:layout_margin="16dp"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -22,19 +23,23 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:scaleType="centerCrop"
                 android:src="@drawable/def_post_decor"
                 android:id="@+id/home_post_image"
                 android:layout_width="match_parent"
-                android:layout_height="120dp" />
+                android:layout_height="200dp" />
 
             <TextView
+                android:gravity="center"
                 android:background="@color/colorAccent"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="7dp" />
 
             <TextView
+                android:gravity="center"
                 android:text="Enuando"
+                android:textColor="@color/indigo"
                 android:id="@+id/home_post_title"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
@@ -46,12 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@android:drawable/ic_menu_today"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
                 <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:id="@+id/home_post_time"
                     android:text="Time"
                     android:layout_width="wrap_content"

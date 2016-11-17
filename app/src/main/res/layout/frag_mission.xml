@@ -17,7 +17,6 @@
 
             <TextView
                 android:id="@+id/f_mission_tv"
-                android:text="Text"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

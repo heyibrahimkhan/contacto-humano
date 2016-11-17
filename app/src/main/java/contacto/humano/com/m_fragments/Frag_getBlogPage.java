@@ -21,6 +21,7 @@ import contacto.humano.com.get_data_async.getBlogFull;
 import contacto.humano.com.m_adapters.blog.adapter_blog_si;
 import contacto.humano.com.m_adapters.blog.adapter_short_blog;
 import contacto.humano.com.m_interfaces.i_general_array;
+import contacto.humano.com.m_interfaces.i_general_string;
 import contacto.humano.com.utils.BitmapWorkerTask;
 
 /**
@@ -51,6 +52,7 @@ public class Frag_getBlogPage extends Fragment {
     private RecyclerView si_rv;
     private ArrayList<TextView> tvs;
     private ImageView iv;
+    private i_general_string igs;
 
     public Frag_getBlogPage() {
         // Required empty public constructor
@@ -95,6 +97,12 @@ public class Frag_getBlogPage extends Fragment {
     }
 
     private void initVars(LayoutInflater inflater) {
+        igs = new i_general_string() {
+            @Override
+            public void onStringTransfer(String string) {
+                mListener.forNewFragment("BlogPage", "BlogPage", string);
+            }
+        };
         tvs = new ArrayList<>();
         mVs = new ArrayList<>();
         lls = new ArrayList<>();
@@ -132,7 +140,7 @@ public class Frag_getBlogPage extends Fragment {
                             for (int i = 1; i < len; i+=2) {
                                 mList.add(new adapter_blog_si.blog_side_item(list.get(i).toString() ,list.get(i+1).toString()));
                             }
-                            si_rv.setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mList));
+                            si_rv.setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mList, igs));
                         }
                     });
                 }
@@ -183,7 +191,7 @@ public class Frag_getBlogPage extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(uri.toString());
         }
     }
 
@@ -193,8 +201,8 @@ public class Frag_getBlogPage extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -216,6 +224,7 @@ public class Frag_getBlogPage extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String string);
+        void forNewFragment(String type_source, String type_destination, String param);
     }
 }

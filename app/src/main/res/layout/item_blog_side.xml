@@ -28,6 +28,8 @@
                 android:layout_height="4dp" />
 
             <TextView
+                android:textColor="@color/indigo"
+                android:textSize="20sp"
                 android:id="@+id/isb_title"
                 android:layout_gravity="center"
                 android:gravity="left"

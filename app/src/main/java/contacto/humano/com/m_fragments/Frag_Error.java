@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import contacto.humano.com.MainActivity;
 import contacto.humano.com.R;
@@ -33,6 +34,7 @@ public class Frag_Error extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View mView;
     private Button reload;
+    private TextView tv;
 
     public Frag_Error() {
         // Required empty public constructor
@@ -72,12 +74,19 @@ public class Frag_Error extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.frag_error, container, false);
         reload = (Button) mView.findViewById(R.id.fe_refresh);
-        reload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.reloadFragement();
-            }
-        });
+        tv = (TextView) mView.findViewById(R.id.fe_tv);
+        if(url.equalsIgnoreCase("hide")){
+            tv.setVisibility(View.GONE);
+        }
+        else{
+
+        }
+//        reload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                MainActivity.reloadFragement();
+//            }
+//        });
         return  mView;
     }
 

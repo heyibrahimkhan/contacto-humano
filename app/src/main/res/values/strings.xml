@@ -11,10 +11,10 @@
     <string name="search_hint">Post Name</string>
 
     <string-array name="subject">
-        <item>About</item>
-        <item>Information Request</item>
+        <item>General Information</item>
         <item>Service Contracted</item>
-        <item>Others</item>
+        <item>Consultant</item>
+        <item>Complaint</item>
     </string-array>
 
     <string-array name="languages">

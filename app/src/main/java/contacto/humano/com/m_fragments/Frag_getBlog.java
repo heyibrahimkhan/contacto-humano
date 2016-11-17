@@ -48,6 +48,7 @@ public class Frag_getBlog extends Fragment {
     private ArrayList<TextView> sb_tv;
     private ArrayList<adapter_blog_si.blog_side_item> mListArchives, mListCategories;
     private RecyclerView rv_sb;
+    private i_general_string igs;
 
     public Frag_getBlog() {
         // Required empty public constructor
@@ -90,8 +91,15 @@ public class Frag_getBlog extends Fragment {
     }
 
     private void initVars(LayoutInflater inflater) {
+        igs = new i_general_string() {
+            @Override
+            public void onStringTransfer(String string) {
+//                System.out.println("This is the string I got = "+string);
+                mListener.forNewFragment("Blog", "Blog", string);
+            }
+        };
         rv_sb = (RecyclerView) mView.findViewById(R.id.fb_rv_sb);
-        rv_sb.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_sb.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv_sb.setItemAnimator(new DefaultItemAnimator());
         sb_tv = new ArrayList<>();
         subViews = new ArrayList<>();
@@ -138,7 +146,7 @@ public class Frag_getBlog extends Fragment {
                         rvs.get(0).post(new Runnable() {
                             @Override
                             public void run() {
-                            rvs.get(0).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListArchives));
+                            rvs.get(0).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListArchives, igs));
                             subViews.get(0).requestLayout();
                             }
                         });
@@ -168,7 +176,7 @@ public class Frag_getBlog extends Fragment {
                             rvs.get(1).post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    rvs.get(1).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListCategories));
+                                    rvs.get(1).setAdapter(new adapter_blog_si(getActivity().getApplicationContext(), mListCategories, igs));
                                     subViews.get(1).requestLayout();
                                 }
                             });
@@ -186,14 +194,15 @@ public class Frag_getBlog extends Fragment {
                         rv_sb.setAdapter(new adapter_short_blog(list, new i_general_string() {
                             @Override
                             public void onStringTransfer(String string) {
-                                mListener.onFragmentInteraction(string);
+//                                mListener.onFragmentInteraction(string);
+                                mListener.forNewFragment("Blog", "BlogPage", string);
                             }
                         }));
                     }
                 });
             }
         });
-        new getBlog(mInterfaces).execute();
+        new getBlog(mParam2, mInterfaces).execute();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -209,8 +218,8 @@ public class Frag_getBlog extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -233,5 +242,6 @@ public class Frag_getBlog extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String string);
+        void forNewFragment(String type_source, String type_destination, String param);
     }
 }

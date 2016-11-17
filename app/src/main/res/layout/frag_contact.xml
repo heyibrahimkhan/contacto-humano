@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content">
                 
                 <LinearLayout
+                    android:animateLayoutChanges="true"
                     android:layout_gravity="center"
                     android:gravity="left"
                     android:orientation="vertical"
@@ -41,12 +42,12 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:src="@drawable/ic_menu_send"
+                            android:src="@drawable/ic_place"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <TextView
-                            android:text="Calle Vaguada Del arc"
+                            android:text="Majadahonda, Spain"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -59,12 +60,12 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:src="@drawable/ic_menu_camera"
+                            android:src="@drawable/ic_call"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <TextView
-                            android:text="+32-692959503"
+                            android:text="+34-692959503"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -77,7 +78,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:src="@drawable/ic_menu_share"
+                            android:src="@drawable/ic_mail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -94,23 +95,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_menu_send"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/b_share_fb"
+                            android:src="@mipmap/ic_share_fb"
+                            android:layout_width="48dip"
+                            android:layout_height="48dip"
+                            app:cb_color="#355089"
+                            app:cb_pressedRingWidth="8dip" />
 
-                        <ImageView
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_menu_send"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/b_share_in"
+                            android:src="@mipmap/ic_share_in"
+                            android:layout_width="48dip"
+                            android:layout_height="48dip"
+                            app:cb_color="#1B86BD"
+                            app:cb_pressedRingWidth="8dip" />
 
-                        <ImageView
-                            android:layout_weight="1"
-                            android:src="@drawable/ic_menu_send"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                        <at.markushi.ui.CircleButton
+                            android:id="@+id/b_share_gp"
+                            android:src="@mipmap/ic_share_gp"
+                            android:layout_width="48dip"
+                            android:layout_height="48dip"
+                            app:cb_color="#CC3323"
+                            app:cb_pressedRingWidth="8dip" />
+
+                        <!--<ImageView-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:src="@drawable/ic_menu_send"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:src="@drawable/ic_menu_send"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:src="@drawable/ic_menu_send"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
 
                     </LinearLayout>
                     
@@ -119,6 +144,7 @@
             </android.support.v7.widget.CardView>
 
             <LinearLayout
+                android:animateLayoutChanges="true"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -191,6 +217,7 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:animateLayoutChanges="true"
                             android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -205,12 +232,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
 
-                        </LinearLayout>
+                            <Spinner
+                                android:layout_marginLeft="16dp "
+                                android:id="@+id/contact_sub_spin"
+                                android:layout_width="24dp"
+                                android:layout_height="wrap_content" />
 
-                        <Spinner
-                            android:id="@+id/contact_sub_spin"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -236,8 +264,7 @@
                     <Button
                         android:layout_marginTop="8dp"
                         android:text="Send"
-                        android:ems="14"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <TextView

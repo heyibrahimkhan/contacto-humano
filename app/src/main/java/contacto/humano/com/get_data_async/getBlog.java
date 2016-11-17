@@ -18,9 +18,10 @@ public class getBlog extends myGet {
 
     ArrayList<Object> mInterfaces;
 
-    public getBlog(ArrayList<Object> Interfaces){
+    public getBlog(String param2, ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/blog-2/"+MainActivity.lang;
+        if(param2 != null) url = param2 + MainActivity.lang;
+        else url = "http://con-tactohumano.com/blog/"+MainActivity.lang;
     }
 
     @Override

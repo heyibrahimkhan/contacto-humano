@@ -1,10 +1,9 @@
 package contacto.humano.com;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -32,30 +30,30 @@ import com.sdsmdg.tastytoast.TastyToast;
 
 import contacto.humano.com.m_fragments.Frag_Error;
 import contacto.humano.com.m_fragments.Frag_Registeration;
+import contacto.humano.com.m_fragments.Frag_getAbout;
 import contacto.humano.com.m_fragments.Frag_getBlog;
 import contacto.humano.com.m_fragments.Frag_getBlogPage;
 import contacto.humano.com.m_fragments.Frag_getContact;
-import contacto.humano.com.m_fragments.Frag_getPress;
-import contacto.humano.com.m_fragments.Frag_getPrivacy;
-import contacto.humano.com.m_fragments.Frag_getServices;
-import contacto.humano.com.m_fragments.Frag_getTerms;
-import contacto.humano.com.m_fragments.Frag_getTestimonial;
-import contacto.humano.com.m_fragments.Frag_getAbout;
 import contacto.humano.com.m_fragments.Frag_getHistory;
 import contacto.humano.com.m_fragments.Frag_getHome;
 import contacto.humano.com.m_fragments.Frag_getMission;
+import contacto.humano.com.m_fragments.Frag_getPartners;
+import contacto.humano.com.m_fragments.Frag_getPrivacy;
+import contacto.humano.com.m_fragments.Frag_getServices;
 import contacto.humano.com.m_fragments.Frag_getTeam;
-import contacto.humano.com.m_fragments.Frag_getWebView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Frag_getHome.OnFragmentInteractionListener,
-        Frag_Error.OnFragmentInteractionListener, Frag_getAbout.OnFragmentInteractionListener, Frag_getBlog.OnFragmentInteractionListener {
+        Frag_Error.OnFragmentInteractionListener, Frag_getAbout.OnFragmentInteractionListener,
+        Frag_getBlog.OnFragmentInteractionListener, Frag_Registeration.OnFragmentInteractionListener,
+        Frag_getBlogPage.OnFragmentInteractionListener {
 
+    public static Context mContext;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private FrameLayout mFrame;
     private RecyclerView rv_homeBar;
-    private static FragmentManager fm;
+    public static FragmentManager fm;
     public static String currentType;
     public static String currentUrl;
     public static String urlAppend;
@@ -78,12 +76,14 @@ public class MainActivity extends AppCompatActivity
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private TextView tootlbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContext = getApplicationContext();
         rv_homeBar = (RecyclerView) findViewById(R.id.homeBar);
         rv_homeBar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rv_homeBar.setItemAnimator(new DefaultItemAnimator());
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        tootlbar_title = (TextView) findViewById(R.id.toolbar_title);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +120,22 @@ public class MainActivity extends AppCompatActivity
 
         urlAppend = "";
 
+//        getSupportActionBar().setTitle("Con.Tacto Humano");
+//        changeDrawerLang();
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+//        changeDrawerLang();
+    }
+
+    private void setToolbarTitle(String title){
+        tootlbar_title.setText(title);
     }
 
     @Override
@@ -129,7 +143,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int count = fm.getBackStackEntryCount();
+            System.out.println("count == "+count);
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                fm.popBackStack();
+            }
         }
     }
 
@@ -147,10 +168,10 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -166,78 +187,118 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.menu_home) {
             currentType = "home";
             currentUrl = "http://con-tactohumano.com/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getHome());
         }
         else if (id == R.id.menu_about_us) {
             currentType = "about us";
             currentUrl = "http://con-tactohumano.com/about-us/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getAbout());
         }
         else if (id == R.id.menu_history) {
             currentType = "history";
             currentUrl = "http://con-tactohumano.com/historia/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getHistory());
         }
         else if (id == R.id.menu_mission) {
             currentType = "mission";
             currentUrl = "http://con-tactohumano.com/mission-and-values/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getMission());
         }
         else if (id == R.id.menu_team) {
             currentType = "team";
             currentUrl = "http://con-tactohumano.com/team/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getTeam());
         }
-        else if (id == R.id.menu_academics) {
-            currentType = "academics";
+        else if (id == R.id.menu_partners) {
+            currentType = "team";
+            currentUrl = "http://con-tactohumano.com/team/";
+            alreadyLoaded = true;
+            replaceFragment(new Frag_getPartners());
+        }
+        else if (id == R.id.menu_services) {
+            currentType = "services";
             currentUrl = "http://con-tactohumano.com/academics/";
             alreadyLoaded = true;
+            replaceFragment(Frag_Error.newInstance("","hide"));
 //            fm.beginTransaction().replace(R.id.mFrame, Frag_getServices.newInstance(currentUrl, currentType)).commit();
-            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR);
+//            TastyToast.makeText(getApplicationContext(), "Incomplete", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
         }
-        else if (id == R.id.menu_professionals) {
-            currentType = "professionals";
-            currentUrl = "http://con-tactohumano.com/professional/";
-            alreadyLoaded = true;
-//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
-            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR);
-        }
+//        else if (id == R.id.menu_academics) {
+//            currentType = "academics";
+//            currentUrl = "http://con-tactohumano.com/academics/";
+//            alreadyLoaded = true;
+////            fm.beginTransaction().replace(R.id.mFrame, Frag_getServices.newInstance(currentUrl, currentType)).commit();
+//            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
+//        }
+//        else if (id == R.id.menu_professionals) {
+//            currentType = "professionals";
+//            currentUrl = "http://con-tactohumano.com/professional/";
+//            alreadyLoaded = true;
+////            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, currentType)).commit();
+//            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
+//        }
         else if (id == R.id.menu_plans) {
             currentType = "plans";
             currentUrl = "http://con-tactohumano.com/plans/";
             alreadyLoaded = true;
+            replaceFragment(Frag_Error.newInstance("","hide"));
 //            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
-            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR);
+//            TastyToast.makeText(getApplicationContext(), "Incomplete", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_consulting) {
             currentType = "consulting";
             currentUrl = "http://con-tactohumano.com/consulting/";
             alreadyLoaded = true;
+            replaceFragment(Frag_Error.newInstance("","hide"));
 //            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
-            TastyToast.makeText(getApplicationContext(), "Not ready yet due to inconsistency issues", TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR);
+//            TastyToast.makeText(getApplicationContext(), "Nothing to show", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
+        }
+        else if (id == R.id.menu_courses) {
+            currentType = "online courses";
+            currentUrl = "http://con-tactohumano.com/consulting/";
+            alreadyLoaded = true;
+            replaceFragment(Frag_Error.newInstance("","hide"));
+//            fm.beginTransaction().replace(R.id.mFrame, Frag_getWebView.newInstance(currentUrl, "")).commit();
+//            TastyToast.makeText(getApplicationContext(), "Nothing to show", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_press) {
             currentType = "press";
             currentUrl = "http://con-tactohumano.com/press/";
             alreadyLoaded = true;
-            replaceFragment(new Frag_getPress());
+            replaceFragment(Frag_Error.newInstance("","hide"));
+//            TastyToast.makeText(getApplicationContext(), "Nothing to show", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_blog) {
             currentType = "blog";
-            currentUrl = "http://con-tactohumano.com/blog-2/";
+            currentUrl = "http://con-tactohumano.com/blog/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, new Frag_getBlog()).commit();
+            replaceFragment(new Frag_getBlog());
         }
         else if (id == R.id.menu_testimonial) {
             currentType = "testimonials";
             currentUrl = "http://con-tactohumano.com/testimonials-page/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, new Frag_getTestimonial()).commit();
+            replaceFragment(Frag_Error.newInstance("","hide"));
+//            TastyToast.makeText(getApplicationContext(), "Nothing to show", TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
         }
         else if (id == R.id.menu_contact) {
             currentType = "contact";
             currentUrl = "http://con-tactohumano.com/contact-us/";
             alreadyLoaded = true;
-            fm.beginTransaction().replace(R.id.mFrame, new Frag_getContact()).commit();
+            replaceFragment(new Frag_getContact());
         }
         else if (id == R.id.menu_register) {
             currentType = "register";
@@ -249,25 +310,86 @@ public class MainActivity extends AppCompatActivity
             alreadyLoaded = true;
             replaceFragment(new Frag_getPrivacy());
         }
-        else if (id == R.id.menu_term) {
-            alreadyLoaded = true;
-            replaceFragment(new Frag_getTerms());
-        }
+//        else if (id == R.id.menu_term) {
+//            alreadyLoaded = true;
+//            replaceFragment(new Frag_getTerms());
+//        }
         else if (id == R.id.menu_lang_english) {
             MainActivity.lang = "?la=en";
             alreadyLoaded = true;
             reloadFragement();
+            changeDrawerLang();
         }
         else if (id == R.id.menu_lang_espanish) {
             MainActivity.lang = "?la=es";
             alreadyLoaded = true;
             reloadFragement();
+            changeDrawerLang();
         }
 
-        if (!alreadyLoaded) replaceFragment(currentType);
+        if(alreadyLoaded){
+            if(id == R.id.menu_lang_english || id == R.id.menu_lang_espanish){
+
+            }
+            else {
+                String text = navigationView.getMenu().findItem(id).getTitle().toString();
+                if (text.equalsIgnoreCase("home") || text.equalsIgnoreCase("inicio")) {
+                    getSupportActionBar().setTitle("Con.Tacto Humano");
+                } else {
+                    getSupportActionBar().setTitle(navigationView.getMenu().findItem(id).getTitle());
+                }
+            }
+        }
+        else replaceFragment(currentType);
+//        getSupportActionBar().setTitle(navigationView.getMenu().findItem(id).getTitle());
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void changeDrawerLang() {
+        if(lang.equals("?la=en")){
+            navigationView.getMenu().findItem(R.id.menu_home).setTitle("Home");
+            navigationView.getMenu().findItem(R.id.menu_about_us).setTitle("About Us");
+            navigationView.getMenu().findItem(R.id.menu_history).setTitle("History");
+            navigationView.getMenu().findItem(R.id.menu_mission).setTitle("Mission & Values");
+            navigationView.getMenu().findItem(R.id.menu_team).setTitle("Team");
+            navigationView.getMenu().findItem(R.id.menu_partners).setTitle("Our Partners");
+            navigationView.getMenu().findItem(R.id.menu_services).setTitle("Services");
+            navigationView.getMenu().findItem(R.id.menu_plans).setTitle("Plans");
+            navigationView.getMenu().findItem(R.id.menu_consulting).setTitle("Consulting");
+            navigationView.getMenu().findItem(R.id.menu_courses).setTitle("Online Courses");
+            navigationView.getMenu().findItem(R.id.menu_press).setTitle("Press");
+            navigationView.getMenu().findItem(R.id.menu_blog).setTitle("Blog");
+            navigationView.getMenu().findItem(R.id.menu_testimonial).setTitle("Testimonials");
+            navigationView.getMenu().findItem(R.id.menu_contact).setTitle("Contact");
+            navigationView.getMenu().findItem(R.id.menu_register).setTitle("Register");
+            TextView tv1 = (TextView) findViewById(R.id.nav_head_tv1);
+            TextView tv2 = (TextView) findViewById(R.id.nav_head_tv2);
+            if (tv1 != null) tv1.setText("Mon - Sat 8.00 - 18.00");
+            if (tv2 != null) tv2.setText("Sunday CLOSED");
+        }
+        else if(lang.equals("?la=es")){
+            navigationView.getMenu().findItem(R.id.menu_home).setTitle("Inicio");
+            navigationView.getMenu().findItem(R.id.menu_about_us).setTitle("Nosotros");
+            navigationView.getMenu().findItem(R.id.menu_history).setTitle("Historia");
+            navigationView.getMenu().findItem(R.id.menu_mission).setTitle("Misión y Valores");
+            navigationView.getMenu().findItem(R.id.menu_team).setTitle("Equipo");
+            navigationView.getMenu().findItem(R.id.menu_partners).setTitle("Aliados");
+            navigationView.getMenu().findItem(R.id.menu_services).setTitle("Servicios");
+            navigationView.getMenu().findItem(R.id.menu_plans).setTitle("Planes");
+            navigationView.getMenu().findItem(R.id.menu_consulting).setTitle("Consultoría");
+            navigationView.getMenu().findItem(R.id.menu_courses).setTitle("Cursos Online");
+            navigationView.getMenu().findItem(R.id.menu_press).setTitle("Prensa");
+            navigationView.getMenu().findItem(R.id.menu_blog).setTitle("Blog");
+            navigationView.getMenu().findItem(R.id.menu_testimonial).setTitle("Testimonios");
+            navigationView.getMenu().findItem(R.id.menu_contact).setTitle("Contacto");
+            navigationView.getMenu().findItem(R.id.menu_register).setTitle("Register");
+            TextView tv1 = (TextView) findViewById(R.id.nav_head_tv1);
+            TextView tv2 = (TextView) findViewById(R.id.nav_head_tv2);
+            if (tv1 != null) tv1.setText("Lun - Sab 8.00 - 18.00");
+            if (tv2 != null) tv2.setText("Domingos CERRADO");
+        }
     }
 
     public static void replaceFragment() {
@@ -300,10 +422,11 @@ public class MainActivity extends AppCompatActivity
         }
         url = url.concat(urlAppend);
         fm.beginTransaction().replace(R.id.mFrame, f).commit();
+
     }
 
     public static void replaceFragment(Fragment fragment) {
-        fm.beginTransaction().replace(R.id.mFrame, fragment).commit();
+        fm.beginTransaction().replace(R.id.mFrame, fragment).addToBackStack("").commit();
     }
 
     @Override
@@ -359,7 +482,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(String string) {
-        replaceFragment(Frag_getBlogPage.newInstance("BlogPage", string));
+//        replaceFragment(Frag_getBlogPage.newInstance("BlogPage", string));
+        if(string.equalsIgnoreCase("blank")){
+//            replaceFragment(Frag_Error.newInstance("", string));
+        }
     }
 
     @Override
@@ -367,6 +493,36 @@ public class MainActivity extends AppCompatActivity
         if(type_source.equalsIgnoreCase("home")){
             if(type_destination.equalsIgnoreCase("contact")) {
                 replaceFragment(new Frag_getContact());
+            }
+        }
+    }
+
+    @Override
+    public void forNewFragment(String type_source, String type_destination, String param) {
+//        System.out.println("This is the param I got here = "+param);
+        if (type_source.equalsIgnoreCase("home")) {
+            if (type_destination.equalsIgnoreCase("contact")) {
+                replaceFragment(new Frag_getContact());
+            }
+            else if (type_destination.equals("BlogPage")) {
+                replaceFragment(Frag_getBlogPage.newInstance("BlogPage", param));
+            }
+            else if (type_destination.equals("Partners")) {
+                replaceFragment(new Frag_getPartners());
+            }
+        }
+        else if(type_source.equalsIgnoreCase("Blog")){
+            if(type_destination.equalsIgnoreCase("BlogPage")){
+                replaceFragment(Frag_getBlogPage.newInstance("BlogPage", param));
+            }
+            else if(type_destination.equalsIgnoreCase("Blog")){
+//                System.out.println("This is the param I got = "+param);
+                replaceFragment(Frag_getBlog.newInstance("Blog", param));
+            }
+        }
+        else if(type_source.equalsIgnoreCase("BlogPage")){
+            if(type_destination.equalsIgnoreCase("BlogPage")){
+                replaceFragment(Frag_getBlogPage.newInstance("BlogPage", param));
             }
         }
     }

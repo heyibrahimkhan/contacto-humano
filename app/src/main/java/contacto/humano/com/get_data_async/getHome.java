@@ -26,7 +26,7 @@ public class getHome extends myGet {
     private ArrayList<Object> mInterfaces;
 
     public getHome(ArrayList interfaces){
-        url = "http://con-tactohumano.com/"+MainActivity.lang; // Put page url
+        url = "http://con-tactohumano.com/"+MainActivity.lang; // Put page url_image
         mInterfaces = interfaces;
     }
 
@@ -40,12 +40,6 @@ public class getHome extends myGet {
         try{
             int len_mInterfaces = mInterfaces.size();
             Document document = Jsoup.connect(url).get();
-
-            String vc_custom_heading = document.select("header.vc_cta3-content-header div h2").text();
-            Elements b_vc_custom_heading = document.select("div.vc_cta3-actions div a");
-            if(len_mInterfaces > 4){
-                ((i_general_array) mInterfaces.get(4)).onArrayListLoaded(getItemWithButtom(vc_custom_heading, b_vc_custom_heading));
-            }
 
             //Decor Items
             Elements decor_title = document.select("div.title h6 span");
@@ -86,12 +80,32 @@ public class getHome extends myGet {
                 }
                 ((i_home_news_post) mInterfaces.get(3)).onHomeNewsPostLoaded(getNewsPostMat(news_post_url, news_post_goto, news_post_date));
             }
+
+            String vc_custom_heading = document.select("header.vc_cta3-content-header div h2").text();
+            Elements b_vc_custom_heading = document.select("div.vc_cta3-actions div a");
+            if(len_mInterfaces > 4){
+                ((i_general_array) mInterfaces.get(4)).onArrayListLoaded(getItemWithButtom(vc_custom_heading, b_vc_custom_heading));
+            }
+            Elements partners_pics = document.select("div.item img");
+            if(len_mInterfaces > 5){
+                ((i_general_array) mInterfaces.get(5)).onArrayListLoaded(getImgUrls(partners_pics));
+            }
         }
         catch (Exception ignored){
             if(!isCancelled())
             MainActivity.setErrorFrag("home", url);
         }
         return super.doInBackground(objects);
+    }
+
+    private ArrayList getImgUrls(Elements partners_pics) {
+        ArrayList l = new ArrayList<>();
+        int len = partners_pics.size();
+        for (int i = 0; i < len; i++){
+            l.add(partners_pics.get(i).absUrl("src"));
+//            System.out.println("l = "+l.get(i));
+        }
+        return l;
     }
 
     private ArrayList getHomeDecorItems(Elements decor_title, Elements decor_detail, Elements decor_image_url, Elements readMore) {

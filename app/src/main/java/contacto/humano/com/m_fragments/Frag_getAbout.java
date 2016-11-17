@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import contacto.humano.com.R;
 import contacto.humano.com.get_data_async.getAboutUs;
 import contacto.humano.com.m_interfaces.about_us.i_about_us;
+import contacto.humano.com.m_interfaces.i_general_string;
 import contacto.humano.com.utils.BitmapWorkerTask;
 
 /**
@@ -104,6 +105,17 @@ public class Frag_getAbout extends Fragment {
                         }
                     });
                 }
+            }
+        });
+        interfaces.add(new i_general_string() {
+            @Override
+            public void onStringTransfer(final String string) {
+                tv.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv.setText(string);
+                    }
+                });
             }
         });
         new getAboutUs(interfaces).execute();

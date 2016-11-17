@@ -139,6 +139,7 @@ public class Frag_Registeration extends Fragment {
             @Override
             public void onStringTransfer(String string) {
                 String status = "", cookie = "", user_id = "", error_message = "";
+                System.out.println("String = "+string);
                 try {
                     JSONObject obj = new JSONObject(string);
                     if(obj.has("status")) {
@@ -148,14 +149,16 @@ public class Frag_Registeration extends Fragment {
                             if(obj.has("user_id")) user_id = obj.getString("user_id");
                             if(!cookie.equals("") && !user_id.equals("")){
                                 TastyToast.makeText(getContext(), obj.toString(), TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                                mListener.onFragmentInteraction("blank");
                             }
                             /*
                             Save cookie and user_id and do whatever
                              */
                         }
                         else{
-                            if(obj.has("error")) {
+                            if(status.equals("error")) {
                                 error_message = obj.getString("error");
+                                System.out.println("Error Message = "+error_message);
                                 TastyToast.makeText(getContext(), error_message, TastyToast.LENGTH_LONG, TastyToast.ERROR);
                             }
                         }
@@ -181,6 +184,7 @@ public class Frag_Registeration extends Fragment {
             @Override
             public void onStringTransfer(String string) {
                 String status = "", method = "", nonce = "", error_message = "";
+                System.out.println("String Nonce = "+string);
                 try {
                     JSONObject obj = new JSONObject(string);
                     if(obj.has("status")) {
@@ -238,7 +242,7 @@ public class Frag_Registeration extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(uri.toString());
         }
     }
 
@@ -271,6 +275,6 @@ public class Frag_Registeration extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String String);
     }
 }

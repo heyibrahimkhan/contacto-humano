@@ -85,7 +85,7 @@ public class Frag_getTeam extends Fragment {
     private void initVars() {
         mInterfaces = new ArrayList<>();
         rv = (RecyclerView) mView.findViewById(R.id.rv_team);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         rv.setItemAnimator(new DefaultItemAnimator());
     }
 

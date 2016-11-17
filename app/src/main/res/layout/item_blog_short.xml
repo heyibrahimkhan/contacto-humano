@@ -20,6 +20,8 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:textSize="20sp"
+                android:textColor="@color/indigo"
                 android:layout_margin="10dp"
                 android:id="@+id/ibs_title"
                 android:text="title"

@@ -20,20 +20,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-
 import java.util.ArrayList;
 
 import contacto.humano.com.R;
 import contacto.humano.com.get_data_async.getHome;
+import contacto.humano.com.m_adapters.home.rv_h_partners;
 import contacto.humano.com.m_adapters.home.rv_h_th_adapter;
 import contacto.humano.com.m_adapters.home.rv_hp_adapter;
 import contacto.humano.com.m_interfaces.home.i_home_achieve;
 import contacto.humano.com.m_interfaces.home.i_home_news_post;
 import contacto.humano.com.m_interfaces.home.i_home_test;
 import contacto.humano.com.m_interfaces.i_general_array;
+import contacto.humano.com.m_interfaces.i_general_string;
 import contacto.humano.com.utils.BitmapWorkerTask;
 
 
@@ -57,14 +55,14 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
 
     private Button b_;
 
-    GoogleMap mMap;
+//    GoogleMap mMap;
 
     private OnFragmentInteractionListener mListener;
     private View mView;
     private RecyclerView rv_testimonials;
     private WebView webView;
     private FragmentManager fm;
-    private SupportMapFragment fragment;
+//    private SupportMapFragment fragment;
     private ArrayList<TextView> decorTvs;
     private ArrayList<LinearLayout> decorLls;
     private Animation bot_top;
@@ -84,6 +82,8 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
     private ArrayList<ImageView> d_ivs;
     private ArrayList<TextView> decorDetailTvs;
     private ArrayList<TextView> achiName;
+    private RecyclerView rv_p_pics;
+    private LinearLayout fh_l_partners;
 
     public Frag_getHome() {
         // Required empty public constructor
@@ -181,11 +181,22 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
 //        });
         interfaces_home.add(new i_general_array() {
             @Override
-            public void onArrayListLoaded(ArrayList list) {
+            public void onArrayListLoaded(final ArrayList list) {
                 int len = list.size();
                 for (int i = 0, j = 0; j < len; i++, j+=4){
-                    decorTvs.get(i).setText(list.get(j).toString());
-                    decorDetailTvs.get(i).setText(list.get(j+1).toString());
+                    final int k = i, l = j;
+                    decorTvs.get(i).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            decorTvs.get(k).setText(list.get(l).toString());
+                        }
+                    });
+                    decorDetailTvs.get(i).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            decorDetailTvs.get(k).setText(list.get(l+1).toString());
+                        }
+                    });
                     new BitmapWorkerTask(d_ivs.get(i), list.get(j+2).toString(), null);
                     decorDetailTvs.get(i).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -209,7 +220,7 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
                         achiName.get(j).post(new Runnable() {
                             @Override
                             public void run() {
-                                achiName.get(j).setText(list.get(l));
+                                achiName.get(j).setText("    "+list.get(l));
                             }
                         });
                         tv_achievement.get(j).post(new Runnable() {
@@ -241,7 +252,12 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
                 rv_home_news_post.post(new Runnable() {
                     @Override
                     public void run() {
-                        rv_home_news_post.setAdapter(new rv_hp_adapter(list));
+                        rv_home_news_post.setAdapter(new rv_hp_adapter(list, new i_general_string() {
+                            @Override
+                            public void onStringTransfer(String string) {
+                                mListener.forNewFragment("home", "BlogPage", string);
+                            }
+                        }));
                     }
                 });
             }
@@ -265,6 +281,25 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         mListener.forNewFragment("home", "contact");
+                    }
+                });
+            }
+        });
+        interfaces_home.add(new i_general_array() {
+            @Override
+            public void onArrayListLoaded(final ArrayList list) {
+                fh_l_partners.post(new Runnable() {
+                    @Override
+                    public void run() {
+//                        for (Object s:list){
+//                            System.out.println("s = "+s.toString());
+//                        }
+                        rv_p_pics.setAdapter(new rv_h_partners(list, new i_general_string() {
+                            @Override
+                            public void onStringTransfer(String string) {
+                                mListener.forNewFragment("home", "Partners");
+                            }
+                        }));
                     }
                 });
             }
@@ -304,6 +339,7 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String string);
         void forNewFragment(String type_source, String type_destination);
+        void forNewFragment(String type_source, String type_destination, String param);
     }
 
     private void initVars() {
@@ -331,32 +367,30 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
 //        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l4));
 //        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l5));
 //        decorLls.add((LinearLayout) mView.findViewById(R.id.decor_l6));
-        int len_lls = decorLls.size();
-        for (int i = 0; i < len_lls; i++){
-            decorLls.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    Animation topToBot = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.top_bot);
-                    view.startAnimation(topToBot);
-                    topToBot.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
 
-                        }
+//        int len_lls = decorLls.size();
+//        for (int i = 0; i < len_lls; i++){
+//            decorLls.get(i).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(final View view) {
+//                    Animation topToBot = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.top_bot);
+//                    view.startAnimation(topToBot);
+//                    topToBot.setAnimationListener(new Animation.AnimationListener() {
+//                        @Override
+//                        public void onAnimationStart(Animation animation) {}
+//
+//                        @Override
+//                        public void onAnimationEnd(Animation animation) {
+//                            view.setVisibility(View.GONE);
+//                        }
+//
+//                        @Override
+//                        public void onAnimationRepeat(Animation animation) {}
+//                    });
+//                }
+//            });
+//        }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            view.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                }
-            });
-        }
         decorTvs = new ArrayList<TextView>();
         decorTvs.add((TextView) mView.findViewById(R.id.home_decor1_title));
         decorTvs.add((TextView) mView.findViewById(R.id.home_decor2_title));
@@ -378,18 +412,20 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
 //        decorUps.add((TextView) mView.findViewById(R.id.decor_up4));
 //        decorUps.add((TextView) mView.findViewById(R.id.decor_up5));
 //        decorUps.add((TextView) mView.findViewById(R.id.decor_up6));
-        int len = decorUps.size();
-        for (int i = 0; i < len; i++){
-            final int j = i;
-            decorUps.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    decorLls.get(j).setVisibility(View.VISIBLE);
-                    Animation botToTop = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.bot_top);
-                    decorLls.get(j).startAnimation(botToTop);
-                }
-            });
-        }
+
+//        int len = decorUps.size();
+//        for (int i = 0; i < len; i++){
+//            final int j = i;
+//            decorUps.get(i).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    decorLls.get(j).setVisibility(View.VISIBLE);
+//                    Animation botToTop = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.bot_top);
+//                    decorLls.get(j).startAnimation(botToTop);
+//                }
+//            });
+//        }
+
         tv_achievement = new ArrayList<>();
         tv_achievement.add((TextView) mView.findViewById(R.id.fh_cc));
         tv_achievement.add((TextView) mView.findViewById(R.id.fh_c));
@@ -402,13 +438,13 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
         rv_testimonials.setItemAnimator(new DefaultItemAnimator());
 
         iv_partners = new ArrayList<ImageView>();
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage1));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage2));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage3));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage4));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage5));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage6));
-        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage7));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage1));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage2));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage3));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage4));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage5));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage6));
+//        iv_partners.add((ImageView) mView.findViewById(R.id.partnerImage7));
 
         rv_home_news_post = (RecyclerView) mView.findViewById(R.id.rv_home_post);
         rv_home_news_post.setLayoutManager(new LinearLayoutManager(
@@ -418,15 +454,19 @@ public class Frag_getHome extends Fragment implements View.OnClickListener {
         fadeIv = (ImageView) mView.findViewById(R.id.home_ad_post);
         fadeAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in_out_repeat);
         fadeBitmap = new ArrayList<>();
+
+        rv_p_pics = (RecyclerView) mView.findViewById(R.id.rv_p_pics);
+        rv_p_pics.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rv_p_pics.setItemAnimator(new DefaultItemAnimator());
+
+        fh_l_partners = (LinearLayout) mView.findViewById(R.id.fh_l_partner);
     }
 
     public static void startFadeAnim(){
         bitmap_num = 0;
         fadeAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
+            public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {

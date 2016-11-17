@@ -1,6 +1,7 @@
 package contacto.humano.com.m_fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import at.markushi.ui.CircleButton;
 import contacto.humano.com.R;
 
 /**
@@ -22,7 +25,7 @@ import contacto.humano.com.R;
  * Use the {@link Frag_getContact#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frag_getContact extends Fragment {
+public class Frag_getContact extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +39,9 @@ public class Frag_getContact extends Fragment {
     private View mView;
     private Spinner spinner;
     private TextView tv_sub;
+    private CircleButton in;
+    private CircleButton fb;
+    private CircleButton gp;
 
     public Frag_getContact() {
         // Required empty public constructor
@@ -98,6 +104,12 @@ public class Frag_getContact extends Fragment {
                 tv_sub.setText(""+adapterView.getItemAtPosition(0));
             }
         });
+        fb = (at.markushi.ui.CircleButton) mView.findViewById(R.id.b_share_fb);
+        in = (at.markushi.ui.CircleButton) mView.findViewById(R.id.b_share_in);
+        gp = (at.markushi.ui.CircleButton) mView.findViewById(R.id.b_share_gp);
+        fb.setOnClickListener(this);
+        in.setOnClickListener(this);
+        gp.setOnClickListener(this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -122,6 +134,13 @@ public class Frag_getContact extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == fb) startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://web.facebook.com/contactohumanoconsulting/?_rdr")));
+        else if (view == in) startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/company/con%E2%80%A2tacto-humano?trk=biz-companies-cym")));
+        else if (view == gp) startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/+Contactohumanoconsulting/posts")));
     }
 
     /**

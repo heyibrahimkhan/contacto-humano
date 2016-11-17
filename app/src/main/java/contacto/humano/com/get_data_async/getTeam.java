@@ -21,7 +21,7 @@ public class getTeam extends myGet {
 
     public getTeam(ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/team/" + MainActivity.lang;
+        url = "http://con-tactohumano.com/equipo/" + MainActivity.lang;
     }
 
     @Override

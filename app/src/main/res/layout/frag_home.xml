@@ -13,6 +13,7 @@
 
         <RelativeLayout
             android:id="@+id/h_rl1"
+            android:background="@color/gray"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
@@ -25,6 +26,7 @@
 
             <TextView
                 android:text="TextView"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -76,22 +78,23 @@
                 android:id="@+id/h_l1"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
 
                     <ImageView
+                        android:visibility="gone"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/def_post_decor"
                         android:id="@+id/h_d_iv1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                     <TextView
+                        android:visibility="gone"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:text="^"
@@ -108,11 +111,12 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:id="@+id/decor_l1"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:textAlignment="center"
                             android:layout_gravity="center"
                             android:textSize="20sp"
                             android:text="Title"
@@ -136,12 +140,12 @@
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
 
                     <ImageView
+                        android:visibility="gone"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/def_post_decor"
                         android:id="@+id/h_d_iv2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
@@ -150,6 +154,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:text="^"
+                        android:visibility="gone"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:background="@color/indigo"
@@ -160,7 +165,7 @@
 
                     <LinearLayout
                         android:background="@color/indigo"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical"
                         android:id="@+id/decor_l2"
                         android:gravity="center"
@@ -168,6 +173,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:textAlignment="center"
                             android:layout_gravity="center"
                             android:textSize="20sp"
                             android:textColor="@color/white"
@@ -191,17 +197,18 @@
 
                 <RelativeLayout
                     android:layout_margin="5dp"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
 
                     <ImageView
+                        android:visibility="gone"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/def_post_decor"
                         android:id="@+id/h_d_iv3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                     <TextView
+                        android:visibility="gone"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:text="^"
@@ -214,7 +221,7 @@
                         android:layout_height="20dp" />
 
                     <LinearLayout
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical"
                         android:id="@+id/decor_l3"
                         android:gravity="center"
@@ -223,6 +230,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:textAlignment="center"
                             android:layout_gravity="center"
                             android:textSize="20sp"
                             android:text="Title"
@@ -426,6 +434,7 @@
 
                 <ImageView
                     android:id="@+id/h_rl2_i"
+                    android:visibility="gone"
                     android:src="@drawable/ic_menu_manage"
                     android:layout_width="16dp"
                     android:layout_height="16dp" />
@@ -433,7 +442,7 @@
                     android:textSize="20sp"
                     android:id="@+id/fh_tv"
                     android:layout_toRightOf="@+id/h_rl2_i"
-                    android:text="Business Communication Skills"
+                    android:text="The Experience of Our Experts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -461,7 +470,7 @@
                         <TextView
                             android:id="@+id/fh_cc_tv"
                             android:text="Cases Completed"
-                            android:textSize="7sp"
+                            android:textSize="10sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -484,7 +493,7 @@
                         <TextView
                             android:id="@+id/fh_c_tv"
                             android:text="Consultants"
-                            android:textSize="7sp"
+                            android:textSize="10sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -507,7 +516,7 @@
                         <TextView
                             android:id="@+id/fh_aw_tv"
                             android:text="Award Winning"
-                            android:textSize="7sp"
+                            android:textSize="10sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -524,13 +533,14 @@
                             android:textSize="20sp"
                             android:id="@+id/fh_sc"
                             android:text="100%"
+                            android:lineSpacingExtra="-10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/fh_sc_tv"
                             android:text="Satisfied Customers"
-                            android:textSize="7sp"
+                            android:textSize="10sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -567,10 +577,12 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:background="@color/cardview_shadow_end_color"
             android:layout_below="@+id/fh_testimonials"
             android:layout_marginTop="16dp"
             android:id="@+id/fh_rv_testimonials"
             android:layout_width="match_parent"
+            android:layout_marginBottom="16dp"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
@@ -579,70 +591,31 @@
             android:layout_below="@+id/fh_rv_testimonials"
             android:orientation="vertical"
             android:id="@+id/h_l3"
-            android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/fh_l_partner"
                 android:background="@color/gray"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:weightSum="7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/partner1"
-                    android:id="@+id/partnerImage1"
-                    android:layout_weight="1"
+                <android.support.v7.widget.RecyclerView
+                    android:layout_gravity="center"
+                    android:id="@+id/rv_p_pics"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:src="@drawable/partner2"
-                    android:id="@+id/partnerImage2"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/partner3"
-                    android:id="@+id/partnerImage3"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/partner4"
-                    android:id="@+id/partnerImage4"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/partner5"
-                    android:id="@+id/partnerImage5"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/partner6"
-                    android:id="@+id/partnerImage6"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:src="@drawable/partner7"
-                    android:id="@+id/partnerImage7"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                </android.support.v7.widget.RecyclerView>
 
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="16dp"
                 android:background="@color/indigo"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -713,15 +686,15 @@
 
             <TextView
                 android:textSize="20sp"
-                android:text="request a call back."
+                android:text="Send us a message and we will gladly we contact with you."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:maxWidth="250dp"
-                android:text="Would you like to speak to one of our financial advisers over the phone? Just submit your details and we’ll be in touch shortly. You can also email us if you would prefer."
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <!--<TextView-->
+                <!--android:maxWidth="250dp"-->
+                <!--android:text="Would you like to speak to one of our financial advisers over the phone? Just submit your details and we’ll be in touch shortly. You can also email us if you would prefer."-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <TextView
                 android:layout_marginTop="10dp"
@@ -732,7 +705,6 @@
             
             <EditText
                 android:id="@+id/home_req_name"
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

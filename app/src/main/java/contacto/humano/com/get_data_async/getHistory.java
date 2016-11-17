@@ -1,5 +1,7 @@
 package contacto.humano.com.get_data_async;
 
+import android.text.Html;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 
 import contacto.humano.com.MainActivity;
 import contacto.humano.com.m_interfaces.about_us.i_about_us;
+import contacto.humano.com.m_interfaces.i_general_string;
 
 /**
  * Created by Ibrahim Ali Khan on 10/12/2016.
@@ -20,7 +23,7 @@ public class getHistory extends myGet{
 
     public getHistory(ArrayList<Object> Interfaces){
         mInterfaces = Interfaces;
-        url = "http://con-tactohumano.com/history/" + MainActivity.lang;
+        url = "http://con-tactohumano.com/historia/" + MainActivity.lang;
     }
 
     @Override
@@ -35,15 +38,27 @@ public class getHistory extends myGet{
             Document document = Jsoup.connect(url).get();
             ArrayList<String> list = new ArrayList<>();
             list.add(getImageUrl(document.select("img.alignright")));
-            list = getParas(document.select("div.wpb_wrapper p"), list);
+//            list = getParas(document.select("div.wpb_wrapper p"), list);
+            list.add(getHtmlString(document.select("div.wpb_wrapper")));
             if (len_mInterfaces > 0){
                 ((i_about_us) mInterfaces.get(0)).onAboutUsLoaded(list);
             }
+//            if (len_mInterfaces > 1){
+//                ((i_general_string) mInterfaces.get(1)).onStringTransfer(getHtmlString(document.select("div.wpb_wrapper")));
+//            }
         }
         catch (Exception ignored){
 
         }
         return null;
+    }
+
+    private String getHtmlString(Elements select) {
+        String s = "";
+        int len = select.size();
+        for (int i = 0; i < len; i++)
+            s = s.concat(Html.fromHtml(select.get(i).html()).toString());
+        return s;
     }
 
     private ArrayList<String> getParas(Elements paras, ArrayList<String> list) {
